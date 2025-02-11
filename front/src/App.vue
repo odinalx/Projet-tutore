@@ -1,47 +1,32 @@
-<script setup>
+<script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div class="min-h-screen bg-red-100">
+    <div class="flex items-center justify-center gap-4 p-4">
+      <a href="https://vite.dev" target="_blank">
+        <img src="/vite.svg" class="h-24 p-6 transition-all hover:drop-shadow-lg" alt="Vite logo" />
+      </a>
+      <a href="https://vuejs.org/" target="_blank">
+        <img src="./assets/vue.svg" class="h-24 p-6 transition-all hover:drop-shadow-lg" alt="Vue logo" />
+      </a>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <HelloWorld msg="Vite + Vue" />
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
 .logo {
-  display: block;
-  margin: 0 auto 2rem;
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
 }
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vue:hover {
+  filter: drop-shadow(0 0 2em #42b883aa);
 }
 </style>
