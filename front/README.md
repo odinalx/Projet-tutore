@@ -48,12 +48,6 @@ npm run dev
 npm run build
 ```
 
-### Linting
-
-```bash
-npm run lint
-```
-
 ## 💻 Scripts Disponibles
 
 - `npm run dev` - Lance le serveur de développement
