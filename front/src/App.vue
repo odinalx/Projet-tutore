@@ -1,22 +1,21 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+// Le router est déjà configuré dans main.ts
 </script>
 
 <template>
-  <div class="min-h-screen bg-red-100">
-    <div class="flex items-center justify-center gap-4 p-4">
-      <a href="https://vite.dev" target="_blank">
-        <img src="/vite.svg" class="h-24 p-6 transition-all hover:drop-shadow-lg" alt="Vite logo" />
-      </a>
-      <a href="https://vuejs.org/" target="_blank">
-        <img
-          src="./assets/vue.svg"
-          class="h-24 p-6 transition-all hover:drop-shadow-lg"
-          alt="Vue logo"
-        />
-      </a>
-    </div>
-    <HelloWorld msg="Vite + Vue" />
+  <div class="min-h-screen bg-gray-100">
+    <nav class="bg-white shadow-sm">
+      <div class="container mx-auto px-4 py-3">
+        <router-link
+          to="/"
+          class="text-gray-800 hover:text-gray-600 font-medium"
+        >
+          Accueil
+        </router-link>
+      </div>
+    </nav>
+
+    <router-view />
   </div>
 </template>
 
