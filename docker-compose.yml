@@ -1,0 +1,39 @@
+services:
+
+  api.slv:
+    build: ./back/app/
+    container_name: api-slv
+    restart: always
+    volumes:
+      - ./back/app:/var/app
+    depends_on:
+      - slv.db
+    ports:
+      - "9000:80"
+    networks:
+      - slv-network
+
+  slv.db:
+    image: postgres:latest
+    container_name: db-slv
+    restart: always
+    ports:
+      - '9001:5432'
+    env_file:
+      - ./back/slv.env
+    volumes:
+      - ./back/data:/docker-entrypoint-initdb.d
+    networks:
+      - slv-network
+
+  adminer:
+    image: adminer
+    container_name: adminer-slv
+    ports:
+      - '9002:8080'
+    networks:
+      - slv-network
+
+networks:
+  slv-network:
+    driver: bridge
