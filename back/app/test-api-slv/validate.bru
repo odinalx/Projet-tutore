@@ -1,0 +1,15 @@
+meta {
+  name: validate
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:9000/tokens/validate
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6ImRlZmF1bHQta2V5LWlkIn0.eyJpZCI6IjlhYzQ3ODg1LWE5MDgtNDQ2MS1iOWYxLTcyZDcxZDdhMDVkMCIsImVtYWlsIjoidmljdG9yQHRlc3QuY29tIiwiZXhwIjoxNzM5MjkxMjc1fQ.S9ICzH3cl3-xxivjPuQ6xGsoVS3VQg3HxMaXx5fYnQIJI0VykhRzSO2qHBcT65pV20nRHn9hVUMZT3Nk5k-hkw
+}
