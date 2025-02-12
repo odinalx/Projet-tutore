@@ -41,8 +41,13 @@ class ValidateTokenAction extends AbstractAction
 
     private function respondWithError(ResponseInterface $response, string $message, int $status): ResponseInterface
     {
-        $responseData = ['error' => $message];
-        $response->getBody()->write(json_encode($responseData));
+        $responseData = [
+            'status' => $status,
+            'error' => $message
+        ];
+
+        $response->getBody()->write(json_encode($responseData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+
         return $response->withHeader('Content-Type', 'application/json')->withStatus($status);
     }
 }

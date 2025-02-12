@@ -6,6 +6,10 @@ use slv\core\services\auth\ServiceAuth;
 use app\providers\JWTManager;
 use slv\infrastructure\PDO\auth\PdoAuthRepository;
 use slv\core\repositoryInterfaces\auth\AuthRepositoryInterface;
+use slv\core\repositoryInterfaces\organisme\OrganismeRepostitoryInterface;
+use slv\core\services\organisme\ServiceOrganismeInterface;
+use slv\infrastructure\PDO\organisme\PdoOrganismeRepository;
+use slv\core\services\organisme\ServiceOrganisme;
 
 return [
     
@@ -22,10 +26,18 @@ return [
         return new PdoAuthRepository($container->get('slv.pdo'));
     },
 
+    OrganismeRepostitoryInterface::class => function (ContainerInterface $container) {
+        return new PdoOrganismeRepository($container->get('slv.pdo'));
+    },
+
     ServiceAuthInterface::class => function (ContainerInterface $container) {
         $jwtManager = $container->get(JWTManager::class);
         return new ServiceAuth($container->get(AuthRepositoryInterface::class), $jwtManager);
     },
+
+    ServiceOrganismeInterface::class => function (ContainerInterface $container) {
+        return new ServiceOrganisme($container->get(OrganismeRepostitoryInterface::class));
+    }
     
 ];
 

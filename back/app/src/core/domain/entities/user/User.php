@@ -28,10 +28,6 @@ class User extends Entity{
         $this->role = self::ROLE_ADHERENT; 
         $this->created_at = new \DateTimeImmutable(); 
         $this->updated_at = new \DateTimeImmutable();      
-    }
-
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): void{
-        $this->updated_at = $updated_at;
-    }
+    }  
 
 }

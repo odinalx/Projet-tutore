@@ -1,0 +1,19 @@
+meta {
+  name: CreateOrganisme
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:9000/organismes
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nom":"Sport et Loisirs Vincéens",
+    "description":"Association qui gère une quinzaine de sections sportives et de loisirs",
+    "adresse":"123 rue Eugène Mouilleron"
+  }
+}
