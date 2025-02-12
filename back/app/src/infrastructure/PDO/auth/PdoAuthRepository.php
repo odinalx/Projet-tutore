@@ -23,14 +23,16 @@ class PdoAuthRepository implements AuthRepositoryInterface
     public function register(User $user): void
     {
         try {
-            $stmt = $this->pdo->prepare('INSERT INTO users (id, nom, prenom, mail, password, role) VALUES (:id, :nom, :prenom, :email, :password, :role)');
+            $stmt = $this->pdo->prepare('INSERT INTO users (id, nom, prenom, mail, password, role, created_at, updated_at) VALUES (:id, :nom, :prenom, :email, :password, :role, :created_at, :updated_at)');
             $stmt->execute([
                 'id' => $user->getID(),
                 'nom' => $user->nom,
                 'prenom' => $user->prenom,
                 'email' => $user->email,
                 'password' => password_hash($user->password, PASSWORD_DEFAULT),
-                'role' => $user->role
+                'role' => $user->role,
+                'created_at' => $user->created_at->format('d-m-Y H:i:s'),
+                'updated_at' => $user->updated_at->format('d-m-Y H:i:s')
             ]);
         } catch (\Exception $e) {
             throw new PdoAuthException('Erreur lors de l\'enregistrement de l\'utilisateur : ' . $e->getMessage());
