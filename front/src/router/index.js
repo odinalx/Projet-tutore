@@ -1,5 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router'
 import AccueilView from '@/views/AccueilView.vue'
+import { createRouter, createWebHistory } from 'vue-router'
+import SectionsListView from '@/views/SectionsListView.vue'
+import DetailSectionView from '@/views/DetailSectionView.vue'
+import InscriptionView from '@/views/InscriptionView.vue'
+import DetailUserView from '@/views/DetailUserView.vue'
+import DetailSectionInscritView from '@/views/DetailSectionInscritView.vue'
 
 
 const router = createRouter({
@@ -10,14 +15,31 @@ const router = createRouter({
       name: 'Accueil',
       component: AccueilView,
     },
-    // {
-    //   path: '/accueil',
-    //   name: 'accueil',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: AccueilView,
-    // },
+ {
+  path: '/sections/',
+  name: 'SectionsList',
+  component: SectionsListView
+ },
+ {
+  path: '/section/',
+  name: 'Details Section',
+  component: DetailSectionView
+ },
+ {
+  path: '/inscription/',
+  name: 'Inscription',
+  component: InscriptionView
+ },
+ {
+  path: '/profil/',
+  name: 'ProfilUtilisateur',
+  component: DetailUserView
+ },
+ {
+  path: '/auth/section/',
+  name: 'Profil utilisateur',
+  component: DetailSectionInscritView
+ },
   ],
 })
 

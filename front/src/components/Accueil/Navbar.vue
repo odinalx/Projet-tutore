@@ -1,21 +1,25 @@
 <template>
-  <header class="bg-gray-200 p-4 flex justify-between items-center">
-    <RouterLink to="/" class="font-bold">LOGO ASSOCIATION</RouterLink>
-    <nav class="flex gap-4">
-      <RouterLink to="/" class="hover:underline">Accueil</RouterLink>
-      <RouterLink to="/sections" class="hover:underline">Sections</RouterLink>
-      <DropdownMenu>
-        <DropdownMenuTrigger as-child>
-          <Button variant="link">Mes Sections ▼</Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent class="w-40">
-          <DropdownMenuItem>Section 1</DropdownMenuItem>
-          <DropdownMenuItem>Section 2</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <Button variant="ghost" class="rounded-full p-2">👤</Button>
-    </nav>
-  </header>
+  <nav class="flex justify-between items-center p-4 border-b">
+    <RouterLink to="accueil">
+      <div class="font-bold">LOGO ASSOCIATION</div>  
+    </RouterLink>
+    
+    <div class="flex space-x-4">
+      <Button variant="link" class="text-blue-500">
+        <RouterLink
+        to="/accueil">
+        Accueil
+        </RouterLink></Button>
+      <Button variant="link">
+        <RouterLink to="/sections">
+        Sections
+      </RouterLink>
+    </Button>
+    <RouterLink to="profil">
+      <Button variant="link">Mon profil</Button>
+    </RouterLink>
+    </div>
+  </nav>
 </template>
 
 <script setup>

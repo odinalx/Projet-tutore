@@ -1,15 +1,14 @@
 <template>
-  <Card class="w-40 text-center">
-    <CardContent class="h-40 flex items-center justify-center bg-gray-200">
-      <span class="text-gray-500">Image</span>
-    </CardContent>
-    <CardFooter class="mt-2">
-      <p class="font-semibold">{{ title }}</p>
-    </CardFooter>
-  </Card>
+  <div class="border rounded-lg p-4 flex flex-col items-center">
+    <RouterLink to="section">
+    <div class="w-32 h-32 border flex items-center justify-center">      
+      <span>Image</span>    
+    </div>
+  </RouterLink>
+    <p class="mt-2 font-semibold">{{ title }}</p>
+  </div>
 </template>
 
 <script setup>
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-defineProps({ title: String });
+  defineProps({ title: String });
 </script>
