@@ -8,13 +8,15 @@ class UserDTO extends DTO {
     protected string $id;
     protected string $email;
     protected string $hashed_password;
+    protected int $role;
     protected string $accessToken;
     protected string $refreshToken;
 
-    public function __construct(string $id, string $email, string $hashed_password) {
+    public function __construct(string $id, string $email, string $hashed_password, int $role) {
         $this->id = $id;
         $this->email = $email;
         $this->hashed_password = $hashed_password;
+        $this->role = $role;
         $this->accessToken = "";
         $this->refreshToken = "";
 

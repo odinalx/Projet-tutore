@@ -10,6 +10,8 @@ use slv\core\repositoryInterfaces\organisme\OrganismeRepostitoryInterface;
 use slv\core\services\organisme\ServiceOrganismeInterface;
 use slv\infrastructure\PDO\organisme\PdoOrganismeRepository;
 use slv\core\services\organisme\ServiceOrganisme;
+use slv\core\services\authorization\AuthrzServiceInterface;
+use slv\core\services\authorization\AuthrzService;
 
 return [
     
@@ -20,6 +22,10 @@ return [
         $user = $config['username'];
         $password = $config['password'];
         return new \PDO($dsn, $user, $password, [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
+    },
+
+    AuthrzServiceInterface::class => function (ContainerInterface $container) {
+        return new AuthrzService($container->get(AuthRepositoryInterface::class));
     },
 
     AuthRepositoryInterface::class => function (ContainerInterface $container) {

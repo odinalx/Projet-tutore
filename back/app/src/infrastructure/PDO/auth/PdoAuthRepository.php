@@ -47,11 +47,11 @@ class PdoAuthRepository implements AuthRepositoryInterface
     public function login(string $email): ?UserDTO
     {
         try {
-            $stmt = $this->pdo->prepare('SELECT id, mail, password FROM users WHERE mail = :mail');
+            $stmt = $this->pdo->prepare('SELECT id, mail, password,role FROM users WHERE mail = :mail');
             $stmt->execute(['mail' => $email]);
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($row) {
-                return new UserDTO($row['id'],$row['mail'], $row['password']);
+                return new UserDTO($row['id'],$row['mail'], $row['password'], $row['role']);
             }
             return null;
         } catch (\Exception $e) {
@@ -71,7 +71,7 @@ class PdoAuthRepository implements AuthRepositoryInterface
             $stmt->execute(['id' => $id]);
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($row) {
-                return new UserDTO($row['id'], $row['mail'], $row['password']);
+                return new UserDTO($row['id'], $row['mail'], $row['password'], $row['role']);
             }
             return null;
         } catch (\Exception $e) {
