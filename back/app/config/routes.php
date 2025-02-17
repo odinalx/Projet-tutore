@@ -39,10 +39,12 @@ return function(App $app): App {
     })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class); 
 
     // Routes pour les sections
-    $app->post('/sections', CreateSectionAction::class)->setName('createSection');
-    $app->get('/sections/{id}', GetSectionAction::class)->setName('getSection');
-    $app->delete('/sections/{id}', DeleteSectionAction::class)->setName('deleteSection');
-    $app->patch('/sections/{id}', UpdateSectionAction::class)->setName('updateSection');
+    $app->group('/sections', function ($group) {
+        $group->get('/{id}', GetSectionAction::class)->setName('getSection');
+        $group->post('', CreateSectionAction::class)->setName('createSection');
+        $group->delete('/{id}', DeleteSectionAction::class)->setName('deleteSection');
+        $group->patch('/{id}', UpdateSectionAction::class)->setName('updateSection');
+    })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
 
     $app->options('/{routes:.+}', function (Request $request, Response $response) {
         return $response;

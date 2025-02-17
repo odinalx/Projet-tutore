@@ -40,6 +40,12 @@ class AuthrzMiddleware
             } catch (AuthrzInvalidRoleException $e) {
                 return $this->respondWithError($e->getMessage(), 403);
             }
+        } else if(strpos($path, '/sections') === 0) {
+            try {
+                $this->authrzService->isGrantedSection($userId);
+            } catch (AuthrzInvalidRoleException $e) {
+                return $this->respondWithError($e->getMessage(), 403);
+            }
         }
 
         return $handler->handle($request);
