@@ -19,8 +19,4 @@ class OrganismeDTO extends DTO {
         $this->created_at = $created_at;
         $this->updated_at = $updated_at;
     }
-
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): void{
-        $this->updated_at = $updated_at;
-    }
 }

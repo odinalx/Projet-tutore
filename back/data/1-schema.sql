@@ -23,6 +23,20 @@ CREATE TABLE "public"."organismes" (
     "updated_at" TIMESTAMP NOT NULL
 );
 
+
+CREATE TABLE "public"."sections" (
+    "id" uuid PRIMARY KEY,
+    "nom" VARCHAR(100) NOT NULL,
+    "description" TEXT NOT NULL,
+    "categorie" VARCHAR(100) NOT NULL,
+    "capacite" INTEGER NOT NULL,
+    "tarif" FLOAT NOT NULL,
+    "organisme_id" uuid NOT NULL,
+    "created_at" TIMESTAMP NOT NULL,
+    "updated_at" TIMESTAMP NOT NULL,
+    FOREIGN KEY (organisme_id) REFERENCES organismes(id)
+);
+
 CREATE TABLE "public"."historique" (
     "id" uuid PRIMARY KEY,
     "table" VARCHAR(100) NOT NULL,

@@ -1,0 +1,22 @@
+meta {
+  name: CreateSection
+  type: http
+  seq: 10
+}
+
+post {
+  url: http://localhost:9000/sections
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nom":"Boxe",
+    "description":"La boxe de SLV",
+    "categorie":"Sport",
+    "capacite" : 15,
+    "tarif" : 10,
+    "organisme_id" : "a0c84a3b-a7dd-4d31-8f12-6a573ebe264d"
+  }
+}

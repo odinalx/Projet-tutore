@@ -14,6 +14,10 @@ use slv\application\actions\organisme\CreateOrganismeAction;
 use slv\application\actions\organisme\GetOrganismeAction;
 use slv\application\actions\organisme\DeleteOrganismeAction;
 use slv\application\actions\organisme\UpdateOrganismeAction;
+use slv\application\actions\sections\CreateSectionAction;
+use slv\application\actions\sections\GetSectionAction;
+use slv\application\actions\sections\DeleteSectionAction;
+use slv\application\actions\sections\UpdateSectionAction;
 
 return function(App $app): App {
 
@@ -33,6 +37,12 @@ return function(App $app): App {
         $group->delete('/{id}', DeleteOrganismeAction::class)->setName('deleteOrganisme');
         $group->patch('/{id}', UpdateOrganismeAction::class)->setName('updateOrganisme');
     })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class); 
+
+    // Routes pour les sections
+    $app->post('/sections', CreateSectionAction::class)->setName('createSection');
+    $app->get('/sections/{id}', GetSectionAction::class)->setName('getSection');
+    $app->delete('/sections/{id}', DeleteSectionAction::class)->setName('deleteSection');
+    $app->patch('/sections/{id}', UpdateSectionAction::class)->setName('updateSection');
 
     $app->options('/{routes:.+}', function (Request $request, Response $response) {
         return $response;

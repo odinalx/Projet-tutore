@@ -26,8 +26,8 @@ class PdoOrganismeRepository implements OrganismeRepostitoryInterface
                 'nom' => $organisme->nom,
                 'description' => $organisme->description,
                 'adresse' => $organisme->adresse,
-                'created_at' => $organisme->created_at->format('d-m-Y H:i:s'),
-                'updated_at' => $organisme->updated_at->format('d-m-Y H:i:s')
+                'created_at' => $organisme->created_at->format('Y-m-d H:i:s'),
+                'updated_at' => $organisme->updated_at->format('Y-m-d H:i:s')
             ]);
         } catch (PDOException $e) {
             throw new PdoOrganismeException("Impossible de créer un organisme" . $e->getMessage());

@@ -1,35 +1,35 @@
 <?php
 
-namespace slv\application\actions\organisme;
+namespace slv\application\actions\sections;
 
 use slv\application\actions\AbstractAction;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use slv\core\services\organisme\ServiceOrganismeException;
-use slv\core\services\organisme\ServiceOrganismeInterface;
+use slv\core\services\sections\ServiceSectionException;
+use slv\core\services\sections\ServiceSectionInterface;
 
-class DeleteOrganismeAction extends AbstractAction
+class DeleteSectionAction extends AbstractAction
 {
-    private ServiceOrganismeInterface $serviceOrganisme;
+    private ServiceSectionInterface $serviceSection;
 
-    public function __construct(ServiceOrganismeInterface $serviceOrganisme)
+    public function __construct(ServiceSectionInterface $serviceSection)
     {
-        $this->serviceOrganisme = $serviceOrganisme;
+        $this->serviceSection = $serviceSection;
     }
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
 {
     try {
-        $this->serviceOrganisme->deleteOrganisme($args['id']);
+        $this->serviceSection->deleteSection($args['id']);
 
         $responseData = [
             'id' => $args['id'],
-            'message' => 'Organisme supprimé avec succès'
+            'message' => 'Section supprimée avec succès'
         ];
 
         $rs->getBody()->write(json_encode($responseData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
         return $rs->withHeader('Content-Type', 'application/json')->withStatus(200);
-    } catch (ServiceOrganismeException $e) {
+    } catch (ServiceSectionException $e) {
         return $this->respondWithError($rs, $e->getMessage(), 400);
     } catch (\Exception $e) {
         return $this->respondWithError($rs, $e->getMessage(), 500);

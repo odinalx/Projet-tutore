@@ -1,0 +1,18 @@
+meta {
+  name: UpdateSection
+  type: http
+  seq: 13
+}
+
+patch {
+  url: http://localhost:9000/sections/058a84a5-1cc8-428f-bf0f-00038241484f
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "capacite": 10,
+    "organisme_id" : "08c708ed-f36f-4570-9a58-331209f0621d"
+  }
+}

@@ -7,11 +7,15 @@ use app\providers\JWTManager;
 use slv\infrastructure\PDO\auth\PdoAuthRepository;
 use slv\core\repositoryInterfaces\auth\AuthRepositoryInterface;
 use slv\core\repositoryInterfaces\organisme\OrganismeRepostitoryInterface;
+use slv\core\repositoryInterfaces\sections\SectionRepositoryInterface;
 use slv\core\services\organisme\ServiceOrganismeInterface;
 use slv\infrastructure\PDO\organisme\PdoOrganismeRepository;
 use slv\core\services\organisme\ServiceOrganisme;
 use slv\core\services\authorization\AuthrzServiceInterface;
 use slv\core\services\authorization\AuthrzService;
+use slv\core\services\sections\ServiceSectionInterface;
+use slv\infrastructure\PDO\sections\PdoSectionRepository;
+use slv\core\services\sections\ServiceSection;
 
 return [
     
@@ -36,6 +40,10 @@ return [
         return new PdoOrganismeRepository($container->get('slv.pdo'));
     },
 
+    SectionRepositoryInterface::class => function (ContainerInterface $container) {
+        return new PdoSectionRepository($container->get('slv.pdo'), $container->get(OrganismeRepostitoryInterface::class));
+    },
+
     ServiceAuthInterface::class => function (ContainerInterface $container) {
         $jwtManager = $container->get(JWTManager::class);
         return new ServiceAuth($container->get(AuthRepositoryInterface::class), $jwtManager);
@@ -43,6 +51,10 @@ return [
 
     ServiceOrganismeInterface::class => function (ContainerInterface $container) {
         return new ServiceOrganisme($container->get(OrganismeRepostitoryInterface::class));
+    },
+
+    ServiceSectionInterface::class => function (ContainerInterface $container) {
+        return new ServiceSection($container->get(SectionRepositoryInterface::class));
     }
     
 ];
