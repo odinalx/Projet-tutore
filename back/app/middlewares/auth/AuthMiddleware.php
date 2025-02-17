@@ -4,19 +4,24 @@ namespace app\middlewares\auth;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\RequestException;
+use app\providers\JWTManager;
 use Slim\Psr7\Response;
 
 class AuthMiddleware implements MiddlewareInterface
-{
-    private ClientInterface $authClient;
+{    
+    private JWTManager $jwtManager;
 
-    public function __construct(ClientInterface $authClient) {
-        $this->authClient = $authClient;
+    public function __construct(JWTManager $jwtManager)
+    {
+        $this->jwtManager = $jwtManager;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): Response {
+        
+        if (!$request->hasHeader('Authorization')) {
+            return $this->respondWithError("Header Authorization manquant", 400);
+        }
+        
         $authHeader = $request->getHeaderLine('Authorization');
 
         if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
@@ -26,21 +31,14 @@ class AuthMiddleware implements MiddlewareInterface
         $token = $matches[1];
 
         try {
-            $this->authClient->request('POST', '/tokens/validate', [
-                'headers' => ['Authorization' => "Bearer $token"]
-            ]);
+            $decoded = $this->jwtManager->decodeToken($token);
+            
+            $request = $request->withAttribute('decoded_token', $decoded);
 
             return $handler->handle($request);
 
-        } catch (RequestException $e) {
-            $statusCode = $e->getResponse() ? $e->getResponse()->getStatusCode() : 500;
-            $errorMessage = match ($statusCode) {
-                400 => 'Requête invalide vers le service d\'authentification',
-                401 => 'Token invalide ou expiré',
-                default => 'Erreur lors de la validation du token'
-            };
-
-            return $this->respondWithError($errorMessage, $statusCode);
+        } catch (\Exception $e) {
+            return $this->respondWithError('Token invalide ou expiré', 401);
         }
     }
 

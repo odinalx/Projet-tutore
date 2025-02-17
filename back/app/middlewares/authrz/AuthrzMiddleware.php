@@ -19,14 +19,11 @@ class AuthrzMiddleware
     }
 
     public function __invoke(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
-    {
-        if (!$request->hasHeader('Authorization')) {
-            return $this->respondWithError("Header Authorization manquant", 400);
-        }
-
+    {     
         $authHeader = $request->getHeaderLine('Authorization');
+        
         if (!preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
-            return $this->respondWithError("Bearer token manquant", 400);
+            return $this->respondWithError("Token manquant ou mal formé", 400);
         }
 
         $token = $matches[1];

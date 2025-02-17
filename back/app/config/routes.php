@@ -1,5 +1,6 @@
 <?php
 
+use app\middlewares\auth\AuthMiddleware;
 use Slim\App;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -31,7 +32,7 @@ return function(App $app): App {
         $group->post('', CreateOrganismeAction::class)->setName('createOrganisme');
         $group->delete('/{id}', DeleteOrganismeAction::class)->setName('deleteOrganisme');
         $group->patch('/{id}', UpdateOrganismeAction::class)->setName('updateOrganisme');
-    })->add(AuthrzMiddleware::class); 
+    })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class); 
 
     $app->options('/{routes:.+}', function (Request $request, Response $response) {
         return $response;
