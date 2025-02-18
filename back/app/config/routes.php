@@ -18,6 +18,7 @@ use slv\application\actions\sections\CreateSectionAction;
 use slv\application\actions\sections\GetSectionAction;
 use slv\application\actions\sections\DeleteSectionAction;
 use slv\application\actions\sections\UpdateSectionAction;
+use slv\application\actions\sections\GetSectionsByUserAction;
 
 return function(App $app): App {
 
@@ -45,6 +46,8 @@ return function(App $app): App {
         $group->delete('/{id}', DeleteSectionAction::class)->setName('deleteSection');
         $group->patch('/{id}', UpdateSectionAction::class)->setName('updateSection');
     })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
+
+    $app->get('/users/{id}/sections', GetSectionsByUserAction::class)->setName('getSectionsByUser');
 
     $app->options('/{routes:.+}', function (Request $request, Response $response) {
         return $response;

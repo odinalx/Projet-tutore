@@ -91,7 +91,7 @@ class PdoSectionRepository implements SectionRepositoryInterface
     public function updateSection(string $id, ?string $nom, ?string $description, ?string $categorie, ?int $capacite, ?float $tarif, ?string $organisme_id): SectionDTO
     {
         try {
-            if($organisme_id !== null) {
+            if ($organisme_id !== null) {
                 $this->organismeRepository->getOrganisme($organisme_id);
             }
 
@@ -137,6 +137,42 @@ class PdoSectionRepository implements SectionRepositoryInterface
             throw new PdoSectionException($e->getMessage());
         } catch (PDOException $e) {
             throw new PdoSectionException("Impossible de mettre à jour la section : " . $e->getMessage());
+        }
+    }
+
+    public function getSectionsByUser(string $user_id): array
+    {
+        try {
+            $query = "
+            SELECT s.*, us.role
+            FROM sections s
+            JOIN user_section us ON s.id = us.section_id
+            WHERE us.user_id = :user_id
+        ";
+
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute(['user_id' => $user_id]);
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $sections = [];
+            foreach ($rows as $row) {
+                $sections[] = new SectionDTO(
+                    $row['id'],
+                    $row['nom'],
+                    $row['description'],
+                    $row['categorie'],
+                    $row['capacite'],
+                    $row['tarif'],
+                    $row['organisme_id'],
+                    $row['created_at'],
+                    $row['updated_at'],
+                    $row['role']
+                );
+            }
+
+            return $sections;
+        } catch (PDOException $e) {
+            throw new PdoSectionException("Impossible de récupérer les sections : " . $e->getMessage());
         }
     }
 }

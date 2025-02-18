@@ -31,8 +31,8 @@ class PdoAuthRepository implements AuthRepositoryInterface
                 'email' => $user->email,
                 'password' => password_hash($user->password, PASSWORD_DEFAULT),
                 'role' => $user->role,
-                'created_at' => $user->created_at->format('d-m-Y H:i:s'),
-                'updated_at' => $user->updated_at->format('d-m-Y H:i:s')
+                'created_at' => $user->created_at->format('Y-m-d H:i:s'),
+                'updated_at' => $user->updated_at->format('Y-m-d H:i:s')
             ]);
         } catch (\Exception $e) {
             throw new PdoAuthException('Erreur lors de l\'enregistrement de l\'utilisateur : ' . $e->getMessage());

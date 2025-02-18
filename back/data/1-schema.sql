@@ -37,6 +37,17 @@ CREATE TABLE "public"."sections" (
     FOREIGN KEY (organisme_id) REFERENCES organismes(id)
 );
 
+
+CREATE TABLE "public"."user_section" (
+    "user_id" uuid NOT NULL,
+    "section_id" uuid NOT NULL,
+    "role" INTEGER NOT NULL,
+    "created_at" TIMESTAMP NOT NULL,
+    "updated_at" TIMESTAMP NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (section_id) REFERENCES sections(id)
+);
+
 CREATE TABLE "public"."historique" (
     "id" uuid PRIMARY KEY,
     "table" VARCHAR(100) NOT NULL,
