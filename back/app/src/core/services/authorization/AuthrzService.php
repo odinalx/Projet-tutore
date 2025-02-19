@@ -28,12 +28,12 @@ class AuthrzService implements AuthrzServiceInterface
         return true;
     }
 
-    public function isGrantedCreateSection(string $userId): bool
+    public function isGrantedResponsable(string $userId): bool
     {
         $userDTO = $this->authRepository->getUserById($userId);
 
         if (!in_array($userDTO->role, [User::ROLE_ADMIN, User::ROLE_RESPONSABLE])) {
-            throw new AuthrzInvalidRoleException("Vous n'avez pas les droits pour créer une section.");
+            throw new AuthrzInvalidRoleException("Vous n'avez pas les droits pour cette action.");
         }
 
         return true;

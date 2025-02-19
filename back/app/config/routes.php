@@ -20,6 +20,8 @@ use slv\application\actions\sections\DeleteSectionAction;
 use slv\application\actions\sections\UpdateSectionAction;
 use slv\application\actions\sections\GetSectionsByUserAction;
 use slv\application\actions\sections\AddUserToSectionAction;
+use slv\application\actions\encadrants\GetEncadrantsByUserAction;
+use slv\application\actions\encadrants\RemoveEncadrantFromSectionAction;
 
 return function(App $app): App {
 
@@ -52,6 +54,10 @@ return function(App $app): App {
     $app->get('/users/{id}/sections', GetSectionsByUserAction::class)->setName('getSectionsByUser');
 
     $app->post('/sections/{id}/users/{userId}', AddUserToSectionAction::class)->setName('addUserToSection');
+
+    // Routes encadrants
+    $app->get('/users/{id}/encadrants', GetEncadrantsByUserAction::class)->setName('getEncadrantsBySection')->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
+    $app->delete('/sections/{section_id}/encadrants/{encadrant_id}', RemoveEncadrantFromSectionAction::class)->setName('removeEncadrant')->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
 
     $app->options('/{routes:.+}', function (Request $request, Response $response) {
         return $response;

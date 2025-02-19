@@ -45,15 +45,28 @@ class AuthrzMiddleware
             }
         } else if ($method === 'POST' && $path === '/sections') { // Autorisation Creation Section
             try {
-                $this->authrzService->isGrantedCreateSection($userId);
-            } catch (AuthrzInvalidRoleException | AuthrzNotOwnerException $e) {
+                $this->authrzService->isGrantedResponsable($userId);
+            } catch (AuthrzInvalidRoleException $e) {
                 return $this->respondWithError($e->getMessage(), 403);
             }
         } else if (preg_match('#^/sections/([a-f0-9\-]+)$#', $path, $matches)) { // Autres Autorisations pour les sections
             $sectionId = $matches[1];
             try {
                 $this->authrzService->isGrantedSection($userId, $sectionId);
-            } catch (AuthrzInvalidRoleException | AuthrzNotOwnerException $e ) {
+            } catch (AuthrzInvalidRoleException | AuthrzNotOwnerException $e) {
+                return $this->respondWithError($e->getMessage(), 403);
+            }
+        } else if (preg_match('#^/users/([a-f0-9\-]+)/encadrants$#', $path, $matches)) {
+            try {
+                $this->authrzService->isGrantedResponsable($userId);
+            } catch (AuthrzInvalidRoleException $e) {
+                return $this->respondWithError($e->getMessage(), 403);
+            }
+        } else if (preg_match('#^/sections/([a-f0-9\-]+)/encadrants/([a-f0-9\-]+)$#', $path, $matches)) {
+            $sectionId = $matches[1];
+            try {
+                $this->authrzService->isGrantedSection($userId, $sectionId);
+            } catch (AuthrzInvalidRoleException | AuthrzNotOwnerException $e) {
                 return $this->respondWithError($e->getMessage(), 403);
             }
         }
