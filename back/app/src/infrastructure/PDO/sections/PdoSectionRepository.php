@@ -200,4 +200,38 @@ class PdoSectionRepository implements SectionRepositoryInterface
             throw new PdoSectionException("Impossible de récupérer les sections : " . $e->getMessage());
         }
     }
+
+    public function addUserToSection(string $userId, string $sectionId, int $role): void
+    {
+        try {
+            $createdAt = (new \DateTime())->format('Y-m-d H:i:s');
+            $userDTO = $this->authRepository->getUserById($userId);
+
+            // Vérification si l'utilisateur est déjà inscrit dans la section
+            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_section WHERE user_id = :user_id AND section_id = :section_id");
+            $stmt->execute([
+                'user_id' => $userId,
+                'section_id' => $sectionId
+            ]);
+
+            if ($stmt->fetchColumn() > 0) {
+                throw new PdoSectionException("L'utilisateur est déjà inscrit à cette section.");
+            }
+
+            // Ajout de l'utilisateur à la section
+            $stmt = $this->pdo->prepare("
+            INSERT INTO user_section (user_id, section_id, role, created_at, updated_at)
+            VALUES (:user_id, :section_id, :role, :created_at, :updated_at)
+        ");
+            $stmt->execute([
+                'user_id' => $userDTO->id,
+                'section_id' => $sectionId,
+                'role' => $role,
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt
+            ]);
+        } catch (PDOException | PdoAuthException $e) {
+            throw new PdoSectionException("Erreur lors de l'ajout de l'utilisateur à la section : " . $e->getMessage());
+        }
+    }
 }

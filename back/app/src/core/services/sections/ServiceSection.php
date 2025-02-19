@@ -61,4 +61,13 @@ class ServiceSection implements ServiceSectionInterface
             throw new ServiceSectionException($e->getMessage());
         }
     }
+
+    public function addUserToSection(string $sectionid, string $userid, int $role): void
+    {
+        try {
+            $this->sectionRepository->addUserToSection($sectionid, $userid, $role);
+        } catch (PdoSectionException $e) {
+            throw new ServiceSectionException($e->getMessage());
+        }
+    }
 }

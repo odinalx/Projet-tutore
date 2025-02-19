@@ -19,6 +19,7 @@ use slv\application\actions\sections\GetSectionAction;
 use slv\application\actions\sections\DeleteSectionAction;
 use slv\application\actions\sections\UpdateSectionAction;
 use slv\application\actions\sections\GetSectionsByUserAction;
+use slv\application\actions\sections\AddUserToSectionAction;
 
 return function(App $app): App {
 
@@ -49,6 +50,8 @@ return function(App $app): App {
     
 
     $app->get('/users/{id}/sections', GetSectionsByUserAction::class)->setName('getSectionsByUser');
+
+    $app->post('/sections/{id}/users/{userId}', AddUserToSectionAction::class)->setName('addUserToSection');
 
     $app->options('/{routes:.+}', function (Request $request, Response $response) {
         return $response;
