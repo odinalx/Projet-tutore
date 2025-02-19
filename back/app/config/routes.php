@@ -42,10 +42,11 @@ return function(App $app): App {
     // Routes pour les sections
     $app->group('/sections', function ($group) {
         $group->get('/{id}', GetSectionAction::class)->setName('getSection');
-        $group->post('', CreateSectionAction::class)->setName('createSection');
         $group->delete('/{id}', DeleteSectionAction::class)->setName('deleteSection');
         $group->patch('/{id}', UpdateSectionAction::class)->setName('updateSection');
-    })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
+        $group->post('', CreateSectionAction::class)->setName('createSection');
+    })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);    
+    
 
     $app->get('/users/{id}/sections', GetSectionsByUserAction::class)->setName('getSectionsByUser');
 
@@ -55,3 +56,6 @@ return function(App $app): App {
 
     return $app;
 };
+
+
+

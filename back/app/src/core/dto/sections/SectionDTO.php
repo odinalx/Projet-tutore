@@ -11,7 +11,7 @@ class SectionDTO extends DTO {
     protected int $capacite;
     protected float $tarif;
     protected string $organisme_id;
-    protected int $role;
+    protected ?int $role;
     protected string $created_at;
     protected string $updated_at;
 

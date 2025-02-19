@@ -16,11 +16,11 @@ class ServiceSection implements ServiceSectionInterface
         $this->sectionRepository = $sectionRepository;
     }
 
-    public function createSection(string $nom, string $description, string $categorie, int $capacite, float $tarif, string $organisme_id): void
+    public function createSection(string $userid, string $nom, string $description, string $categorie, int $capacite, float $tarif, string $organisme_id): void
     {
         try {
             $section = new Section($nom, $description, $categorie, $capacite, $tarif, $organisme_id);
-            $this->sectionRepository->createSection($section);
+            $this->sectionRepository->createSection($section, $userid);
         } catch (PdoSectionException $e) {
             throw new ServiceSectionException($e->getMessage());
         }

@@ -1,4 +1,5 @@
 <?php
+
 namespace app\middlewares\authrz;
 
 use Psr\Http\Message\ServerRequestInterface;
@@ -8,6 +9,7 @@ use app\providers\JWTManager;
 use Slim\Psr7\Response;
 use slv\core\services\authorization\AuthrzServiceInterface;
 use slv\core\services\authorization\AuthrzInvalidRoleException;
+use slv\core\services\authorization\AuthrzNotOwnerException;
 
 class AuthrzMiddleware
 {
@@ -19,9 +21,9 @@ class AuthrzMiddleware
     }
 
     public function __invoke(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
-    {     
+    {
         $authHeader = $request->getHeaderLine('Authorization');
-        
+
         if (!preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
             return $this->respondWithError("Token manquant ou mal formé", 400);
         }
@@ -31,6 +33,7 @@ class AuthrzMiddleware
         // Décode le token JWT
         $jwtManager = new JWTManager();
         $auth_data = $jwtManager->decodeToken($token);
+        $method = $request->getMethod();
         $path = $request->getUri()->getPath();
         $userId = $auth_data['id'];
 
@@ -40,10 +43,17 @@ class AuthrzMiddleware
             } catch (AuthrzInvalidRoleException $e) {
                 return $this->respondWithError($e->getMessage(), 403);
             }
-        } else if(strpos($path, '/sections') === 0) {
+        } else if ($method === 'POST' && $path === '/sections') { // Autorisation Creation Section
             try {
-                $this->authrzService->isGrantedSection($userId);
-            } catch (AuthrzInvalidRoleException $e) {
+                $this->authrzService->isGrantedCreateSection($userId);
+            } catch (AuthrzInvalidRoleException | AuthrzNotOwnerException $e) {
+                return $this->respondWithError($e->getMessage(), 403);
+            }
+        } else if (preg_match('#^/sections/([a-f0-9\-]+)$#', $path, $matches)) { // Autres Autorisations pour les sections
+            $sectionId = $matches[1];
+            try {
+                $this->authrzService->isGrantedSection($userId, $sectionId);
+            } catch (AuthrzInvalidRoleException | AuthrzNotOwnerException $e ) {
                 return $this->respondWithError($e->getMessage(), 403);
             }
         }

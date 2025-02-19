@@ -63,6 +63,7 @@ class PdoAuthRepository implements AuthRepositoryInterface
      * Récupère un utilisateur par son id
      * @param string $id
      * @return UserDTO|null
+     * @throws PdoAuthException
      */
     public function getUserById(string $id): ?UserDTO
     {

@@ -33,7 +33,7 @@ class UpdateSectionAction extends AbstractAction
             $sectionDTO = $this->serviceSection->updateSection($id, $nom, $description, $categorie, $capacite, $tarif, $organisme_id);
             
             $responseData = [
-                'message' => 'Organisme mis à jour avec succès.',
+                'message' => 'Section mise à jour avec succès.',
                 'data' => [
                     'id' => $sectionDTO->id,
                     'nom' => $sectionDTO->nom,

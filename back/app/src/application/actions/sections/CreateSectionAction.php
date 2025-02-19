@@ -21,12 +21,19 @@ class CreateSectionAction extends AbstractAction
     {
         try {
             $data = $rq->getParsedBody();
+            $decodedtoken = $rq->getAttribute('decoded_token');
 
             if (!isset($data['nom']) || !isset($data['description']) || !isset($data['categorie']) || !isset($data['capacite']) || !isset($data['tarif']) || !isset($data['organisme_id'])) {
                 return $this->respondWithError($rs, 'Nom, description, catégorie, capacité, tarif et organisme_id requis', 400);
             }
 
-            $this->serviceSection->createSection($data['nom'], $data['description'], $data['categorie'], $data['capacite'], $data['tarif'], $data['organisme_id']);
+            if (!$decodedtoken || !isset($decodedtoken['id'])) {
+                return $this->respondWithError($rs, 'Impossible de récupérer l\'identifiant utilisateur', 401);
+            }
+
+            $userId = $decodedtoken['id'];
+
+            $this->serviceSection->createSection($userId, $data['nom'], $data['description'], $data['categorie'], $data['capacite'], $data['tarif'], $data['organisme_id']);
 
             $responseData = [
                 'success' => true,

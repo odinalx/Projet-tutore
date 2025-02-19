@@ -29,7 +29,7 @@ return [
     },
 
     AuthrzServiceInterface::class => function (ContainerInterface $container) {
-        return new AuthrzService($container->get(AuthRepositoryInterface::class));
+        return new AuthrzService($container->get(AuthRepositoryInterface::class), $container->get(SectionRepositoryInterface::class));
     },
 
     AuthRepositoryInterface::class => function (ContainerInterface $container) {
@@ -41,7 +41,7 @@ return [
     },
 
     SectionRepositoryInterface::class => function (ContainerInterface $container) {
-        return new PdoSectionRepository($container->get('slv.pdo'), $container->get(OrganismeRepostitoryInterface::class));
+        return new PdoSectionRepository($container->get('slv.pdo'), $container->get(OrganismeRepostitoryInterface::class), $container->get(AuthRepositoryInterface::class));
     },
 
     ServiceAuthInterface::class => function (ContainerInterface $container) {
