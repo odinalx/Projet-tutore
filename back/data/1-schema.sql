@@ -48,6 +48,31 @@ CREATE TABLE "public"."user_section" (
     FOREIGN KEY (section_id) REFERENCES sections(id)
 );
 
+CREATE TABLE "public"."formulaire" (
+    "id" uuid PRIMARY KEY,
+    "nom" VARCHAR(100) NOT NULL,
+    "description" TEXT NOT NULL,
+    "section_id" uuid NOT NULL,
+    "created_at" TIMESTAMP NOT NULL,
+    "updated_at" TIMESTAMP NOT NULL,
+    FOREIGN KEY (section_id) REFERENCES sections(id)
+);
+
+CREATE TABLE "public"."champ" (
+    "id" uuid PRIMARY KEY,
+    "nom" VARCHAR(100) NOT NULL,
+    "description" TEXT NOT NULL,
+    "created_at" TIMESTAMP NOT NULL,
+    "updated_at" TIMESTAMP NOT NULL
+);
+
+CREATE TABLE "public"."champ_formulaire" (
+    "champ_id" uuid NOT NULL,
+    "formulaire_id" uuid NOT NULL,
+    FOREIGN KEY (champ_id) REFERENCES champ(id),
+    FOREIGN KEY (formulaire_id) REFERENCES formulaire(id)
+);
+
 CREATE TABLE "public"."historique" (
     "id" uuid PRIMARY KEY,
     "table" VARCHAR(100) NOT NULL,

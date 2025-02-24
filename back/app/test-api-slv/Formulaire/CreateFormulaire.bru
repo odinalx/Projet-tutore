@@ -1,0 +1,19 @@
+meta {
+  name: CreateFormulaire
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:9000/formulaires
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nom":"Formulaire Boxe",
+    "description":"Le formulaire pour s'inscrire à la boxe de SLV",
+    "section_id":"058a84a5-1cc8-428f-bf0f-00038241484f"
+  }
+}
