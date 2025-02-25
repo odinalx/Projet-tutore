@@ -97,6 +97,14 @@ class AuthrzMiddleware
             } catch (AuthrzInvalidRoleException | AuthrzNotOwnerException $e) {
                 return $this->respondWithError($e->getMessage(), 403);
             }
+        } else if (preg_match('#^/paiements/([a-f0-9\-]+)(/paiements-partiels)?$#', $path, $matches)) {
+            $paiementId = $matches[1];
+            try {
+                // Vérifiez si l'utilisateur est bien celui associé au paiement
+                $this->authrzService->isGrantedPaiement($userId, $paiementId);
+            } catch (AuthrzInvalidRoleException | AuthrzNotOwnerException $e) {
+                return $this->respondWithError($e->getMessage(), 403);
+            }
         }
 
         return $handler->handle($request);

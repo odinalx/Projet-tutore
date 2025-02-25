@@ -1,0 +1,19 @@
+meta {
+  name: CreatePaiement
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:9000/paiements
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "montant_total": 10,
+    "reste_a_payer": 10,
+    "section_id":"058a84a5-1cc8-428f-bf0f-00038241484f"
+  }
+}

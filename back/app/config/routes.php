@@ -30,6 +30,10 @@ use slv\application\actions\formulaire\CreateChampAction;
 use slv\application\actions\formulaire\GetChampAction;
 use slv\application\actions\formulaire\DeleteChampAction;
 use slv\application\actions\formulaire\AddChampToFormulaireAction;
+use slv\application\actions\paiement\CreatePaiementAction;
+use slv\application\actions\paiement\GetPaiementAction;
+use slv\application\actions\paiement\DeletePaiementAction;
+use slv\application\actions\paiement\CreatePaiementPartielAction;
 
 return function(App $app): App {
 
@@ -82,6 +86,14 @@ return function(App $app): App {
         $group->post('', CreateChampAction::class)->setName('createChamp');
         $group->get('/{id}', GetChampAction::class)->setName('getChamp');
         $group->delete('/{id}', DeleteChampAction::class)->setName('deleteChamp');
+    })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
+
+    //Route paiements
+    $app->group('/paiements', function ($group) {
+        $group->post('', CreatePaiementAction::class)->setName('createPaiement');
+        $group->get('/{id}', GetPaiementAction::class)->setName('getPaiement');
+        $group->delete('/{id}', DeletePaiementAction::class)->setName('deletePaiement');
+        $group->post('/{id}/paiements-partiels', CreatePaiementPartielAction::class)->setName('createPaiementPartiel');
     })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
 
     $app->options('/{routes:.+}', function (Request $request, Response $response) {
