@@ -6,12 +6,12 @@ use slv\core\domain\entities\formulaire\Formulaire;
 use slv\core\dto\formulaire\FormulaireDTO;
 use slv\infrastructure\PDO\formulaire\PdoFormulaireException;
 use slv\core\dto\formulaire\ChampDTO;
-use slv\core\repositoryInterfaces\formulaire\FormulaireRepostitoryInterface;
+use slv\core\repositoryInterfaces\formulaire\FormulaireRepositoryInterface;
 use PDO;
 use PDOException;
 use slv\core\domain\entities\formulaire\Champ;
 
-class PdoFormulaireRepository implements FormulaireRepostitoryInterface
+class PdoFormulaireRepository implements FormulaireRepositoryInterface
 {
     private PDO $pdo;
 

@@ -69,16 +69,20 @@ return function(App $app): App {
     $app->delete('/sections/{section_id}/encadrants/{encadrant_id}', RemoveEncadrantFromSectionAction::class)->setName('removeEncadrant')->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
 
     // Routes formulaire
-    $app->post('/formulaires', CreateFormulaireAction::class)->setName('createFormulaire');
-    $app->get('/formulaires/{id}', GetFormulaireAction::class)->setName('getFormulaire');
-    $app->delete('/formulaires/{id}', DeleteFormulaireAction::class)->setName('deleteFormulaire');
-    $app->patch('/formulaires/{id}', UpdateFormulaireAction::class)->setName('updateFormulaire');
-    $app->post('/formulaires/{formulaire_id}/champs/{champ_id}', AddChampToFormulaireAction::class)->setName('addChampToFormulaire');
+    $app->group('/formulaires', function ($group) {
+        $group->post('', CreateFormulaireAction::class)->setName('createFormulaire');
+        $group->get('/{id}', GetFormulaireAction::class)->setName('getFormulaire');
+        $group->delete('/{id}', DeleteFormulaireAction::class)->setName('deleteFormulaire');
+        $group->patch('/{id}', UpdateFormulaireAction::class)->setName('updateFormulaire');
+        $group->post('/{formulaire_id}/champs/{champ_id}', AddChampToFormulaireAction::class)->setName('addChampToFormulaire');
+    })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
 
     // Routes champs
-    $app->post('/champs', CreateChampAction::class)->setName('createChamp');
-    $app->get('/champs/{id}', GetChampAction::class)->setName('getChamp');
-    $app->delete('/champs/{id}', DeleteChampAction::class)->setName('deleteChamp');
+    $app->group('/champs', function ($group) {
+        $group->post('', CreateChampAction::class)->setName('createChamp');
+        $group->get('/{id}', GetChampAction::class)->setName('getChamp');
+        $group->delete('/{id}', DeleteChampAction::class)->setName('deleteChamp');
+    })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
 
     $app->options('/{routes:.+}', function (Request $request, Response $response) {
         return $response;

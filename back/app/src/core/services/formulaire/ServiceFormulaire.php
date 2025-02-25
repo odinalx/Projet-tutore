@@ -2,7 +2,7 @@
 
 namespace slv\core\services\formulaire;
 
-use slv\core\repositoryInterfaces\formulaire\FormulaireRepostitoryInterface;
+use slv\core\repositoryInterfaces\formulaire\FormulaireRepositoryInterface;
 use slv\core\domain\entities\formulaire\Formulaire;
 use slv\core\dto\formulaire\FormulaireDTO;
 use slv\core\domain\entities\formulaire\Champ;
@@ -11,9 +11,9 @@ use slv\infrastructure\PDO\formulaire\PdoFormulaireException;
 
 class ServiceFormulaire implements ServiceFormulaireInterface
 {
-    private FormulaireRepostitoryInterface $formulaireRepository;
+    private FormulaireRepositoryInterface $formulaireRepository;
 
-    public function __construct(FormulaireRepostitoryInterface $formulaireRepository)
+    public function __construct(FormulaireRepositoryInterface $formulaireRepository)
     {
         $this->formulaireRepository = $formulaireRepository;
     }

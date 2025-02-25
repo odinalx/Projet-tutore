@@ -7,7 +7,7 @@ use app\providers\JWTManager;
 use slv\infrastructure\PDO\auth\PdoAuthRepository;
 use slv\core\repositoryInterfaces\auth\AuthRepositoryInterface;
 use slv\core\repositoryInterfaces\encadrants\EncadrantRepositoryInterface;
-use slv\core\repositoryInterfaces\formulaire\FormulaireRepostitoryInterface;
+use slv\core\repositoryInterfaces\formulaire\FormulaireRepositoryInterface;
 use slv\core\repositoryInterfaces\organisme\OrganismeRepostitoryInterface;
 use slv\core\repositoryInterfaces\sections\SectionRepositoryInterface;
 use slv\core\services\organisme\ServiceOrganismeInterface;
@@ -37,7 +37,7 @@ return [
     },
 
     AuthrzServiceInterface::class => function (ContainerInterface $container) {
-        return new AuthrzService($container->get(AuthRepositoryInterface::class), $container->get(SectionRepositoryInterface::class));
+        return new AuthrzService($container->get(AuthRepositoryInterface::class), $container->get(SectionRepositoryInterface::class), $container->get(FormulaireRepositoryInterface::class));
     },
 
     AuthRepositoryInterface::class => function (ContainerInterface $container) {
@@ -56,7 +56,7 @@ return [
         return new PdoEncadrantRepository($container->get('slv.pdo'));
     },
 
-    FormulaireRepostitoryInterface::class => function (ContainerInterface $container) {
+    FormulaireRepositoryInterface::class => function (ContainerInterface $container) {
         return new PdoFormulaireRepository($container->get('slv.pdo'));
     },
 
@@ -82,7 +82,7 @@ return [
     },
 
     ServiceFormulaireInterface::class => function (ContainerInterface $container) {
-        return new ServiceFormulaire($container->get(FormulaireRepostitoryInterface::class));
+        return new ServiceFormulaire($container->get(FormulaireRepositoryInterface::class));
     }
     
 ];

@@ -69,6 +69,34 @@ class AuthrzMiddleware
             } catch (AuthrzInvalidRoleException | AuthrzNotOwnerException $e) {
                 return $this->respondWithError($e->getMessage(), 403);
             }
+        } else if (preg_match('#^/champs(/.*)?$#', $path)) {
+            try {
+                $this->authrzService->isGrantedResponsable($userId);
+            } catch (AuthrzInvalidRoleException $e) {
+                return $this->respondWithError($e->getMessage(), 403);
+            }
+        } else if (preg_match('#^/formulaires$#', $path) && $method === 'POST') {
+            try {
+                $this->authrzService->isGrantedResponsable($userId);
+            } catch (AuthrzInvalidRoleException $e) {
+                return $this->respondWithError($e->getMessage(), 403);
+            }
+        } else if (preg_match('#^/formulaires/([a-f0-9\-]+)$#', $path, $matches)) {
+            $formulaireId = $matches[1];
+
+            try {
+                $this->authrzService->isGrantedFormulaireSection($userId, $formulaireId);
+            } catch (AuthrzInvalidRoleException | AuthrzNotOwnerException $e) {
+                return $this->respondWithError($e->getMessage(), 403);
+            }
+        } else if (preg_match('#^/formulaires/([a-f0-9\-]+)/champs/([a-f0-9\-]+)$#', $path, $matches)) {
+            $formulaireId = $matches[1];
+
+            try {
+                $this->authrzService->isGrantedFormulaireSection($userId, $formulaireId);
+            } catch (AuthrzInvalidRoleException | AuthrzNotOwnerException $e) {
+                return $this->respondWithError($e->getMessage(), 403);
+            }
         }
 
         return $handler->handle($request);

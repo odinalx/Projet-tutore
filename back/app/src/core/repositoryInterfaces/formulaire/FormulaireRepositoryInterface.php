@@ -6,7 +6,7 @@ use slv\core\domain\entities\formulaire\Champ;
 use slv\core\dto\formulaire\ChampDTO;
 use slv\core\dto\formulaire\FormulaireDTO;
 
-interface FormulaireRepostitoryInterface {
+interface FormulaireRepositoryInterface {
 
     public function createFormulaire(Formulaire $formulaire): void;
     public function deleteFormulaire(string $id): void;
