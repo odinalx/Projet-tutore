@@ -1,6 +1,7 @@
 <?php
 
 use Psr\Container\ContainerInterface;
+
 use slv\core\services\auth\ServiceAuthInterface;
 use slv\core\services\auth\ServiceAuth;
 use app\providers\JWTManager;
@@ -24,6 +25,11 @@ use slv\core\services\sections\ServiceSection;
 use slv\infrastructure\PDO\encadrants\PdoEncadrantRepository;
 use slv\infrastructure\PDO\formulaire\PdoFormulaireRepository;
 use slv\core\services\formulaire\ServiceFormulaire;
+use slv\core\services\activite\ServiceActiviteInterface;
+use slv\core\services\activite\ServiceActivite;
+use slv\core\repositoryInterfaces\activite\ActiviteRepositoryInterface;
+use slv\infrastructure\PDO\activite\PdoActiviteRepository;
+
 
 return [
     
@@ -60,6 +66,10 @@ return [
         return new PdoFormulaireRepository($container->get('slv.pdo'));
     },
 
+    ActiviteRepositoryInterface::class => function (ContainerInterface $container) {
+        return new PdoActiviteRepository($container->get('slv.pdo'));
+    },
+
     //////////////////////////////////////////
     // Services
     //////////////////////////////////////////
@@ -83,6 +93,10 @@ return [
 
     ServiceFormulaireInterface::class => function (ContainerInterface $container) {
         return new ServiceFormulaire($container->get(FormulaireRepositoryInterface::class));
+    },
+
+    ServiceActiviteInterface::class => function(ContainerInterface $container) {
+        return new ServiceActivite($container->get(ActiviteRepositoryInterface::class));
     }
     
 ];

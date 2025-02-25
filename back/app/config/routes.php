@@ -30,6 +30,14 @@ use slv\application\actions\formulaire\CreateChampAction;
 use slv\application\actions\formulaire\GetChampAction;
 use slv\application\actions\formulaire\DeleteChampAction;
 use slv\application\actions\formulaire\AddChampToFormulaireAction;
+use slv\application\actions\lieu\CreateLieuAction;
+use slv\application\actions\lieu\DeleteLieuAction;
+use slv\application\actions\lieu\UpdateLieuAction;
+use slv\application\actions\activite\CreateActiviteAction;
+use slv\application\actions\activite\DeleteActiviteAction;
+use slv\application\actions\activite\UpdateActiviteAction;
+use slv\application\actions\activite\GetActiviteAction;
+
 
 return function(App $app): App {
 
@@ -83,6 +91,26 @@ return function(App $app): App {
         $group->get('/{id}', GetChampAction::class)->setName('getChamp');
         $group->delete('/{id}', DeleteChampAction::class)->setName('deleteChamp');
     })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
+
+    //routes lieu
+    $app->group('/lieu', function ($group) {
+        $group->post('', CreateLieuAction::class)->setName('createLieu');        
+        $group->delete('/{id}', DeleteLieuAction::class)->setName('deleteLieu');
+        $group->patch('/{id}', UpdateLieuAction::class)->setName('updateLieu');
+        $group->get('/{id}', GetLieuAction::class)->setName('getLieu');
+    });
+
+    //routes activite
+    $app->group('/activite', function ($group) {
+        $group->post('', CreateActiviteAction::class)->setName('createActivite');
+        $group->delete('/{id}', DeleteActiviteAction::class)->setName('DeleteActivite');
+        $group->patch('/{id}', UpdateActiviteAction::class)->setName('updateActivite');
+        $group->get('/{id}', GetActiviteAction::class)->setName('getActivite');
+        // $group->get('/users/{id}/activites', GetActivitesByUserAction::class)->setName('getActivitesByUser');
+        
+    })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
+
+    
 
     $app->options('/{routes:.+}', function (Request $request, Response $response) {
         return $response;
