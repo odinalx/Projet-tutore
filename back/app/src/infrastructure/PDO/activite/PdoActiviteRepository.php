@@ -7,6 +7,7 @@ use slv\core\dto\Activite\ActiviteDTO;
 use slv\core\repositoryInterfaces\activite\ActiviteRepositoryInterface;
 use PDO;
 use PDOException;
+use slv\core\dto\activite\UserActivityDTO;
 
 class PdoActiviteRepository implements ActiviteRepositoryInterface
 {
@@ -118,4 +119,42 @@ class PdoActiviteRepository implements ActiviteRepositoryInterface
             throw new PdoActiviteException("Impossible de récupérer l'activité : " . $e->getMessage());
         }
     }
+
+    public function getActivitesByUser(string $userId): array
+    {
+        try {
+            
+            $stmt = $this->pdo->prepare('SELECT *  FROM user_activities  WHERE user_id = :user_id ');
+            $stmt->execute(['user_id' => $userId]);
+
+            $rows = $stmt->fetchAll();
+
+            if ($rows === false || empty($rows)) {
+                throw new PdoActiviteException("Aucune activité trouvée pour l'utilisateur avec l'ID: $userId");
+            }
+            
+            
+            $activites = [];
+            foreach ($rows as $row) {
+                $activites[] = new UserActivityDTO(
+                    $row['user_id'],
+                    $row['user_nom'],
+                    $row['user_prenom'],
+                    $row['activite_id'],
+                    $row['activite_nom'],
+                    $row['date_debut'],
+                    $row['date_fin'],
+                    $row['section_id'],
+                    $row['section_nom']
+                );
+            }      
+                     #TODO:  vérifier la réponse, elle est encore vide
+            
+            return $activites;
+        } catch (PDOException $e) {
+            throw new PdoActiviteException("Impossible de récupérer les activités : " . $e->getMessage());
+        }
+    }
+
+
 }

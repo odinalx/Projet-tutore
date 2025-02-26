@@ -6,6 +6,7 @@ use slv\core\domain\entities\activite\Activite;
 use slv\core\dto\activite\ActiviteDTO;
 use slv\core\repositoryInterfaces\activite\ActiviteRepositoryInterface;
 use slv\infrastructure\PDO\activite\PdoActiviteException;
+use slv\core\dto\activite\UserActivityDTO;
 
 class ServiceActivite implements ServiceActiviteInterface
 {
@@ -56,4 +57,17 @@ class ServiceActivite implements ServiceActiviteInterface
             throw new ServiceActiviteException($e->getMessage());
         }
     }
+
+    public function getActivitesByUser($userId):array
+    {
+        try{
+        return $this->activiteRepository->getActivitesByUser($userId);
+        }
+        catch(PdoActiviteException $e)
+        {
+            throw new ServiceActiviteException($e->getMessage());
+        }
+    }
+
+
 }

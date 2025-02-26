@@ -38,6 +38,7 @@ use slv\application\actions\activite\CreateActiviteAction;
 use slv\application\actions\activite\DeleteActiviteAction;
 use slv\application\actions\activite\UpdateActiviteAction;
 use slv\application\actions\activite\GetActiviteAction;
+use slv\application\actions\activite\GetActivitesByUserAction;
 
 
 
@@ -107,10 +108,11 @@ return function(App $app): App {
         $group->post('', CreateActiviteAction::class)->setName('createActivite');
         $group->delete('/{id}', DeleteActiviteAction::class)->setName('DeleteActivite');
         $group->patch('/{id}', UpdateActiviteAction::class)->setName('updateActivite');
-        $group->get('/{id}', GetActiviteAction::class)->setName('getActivite');
-        // $group->get('/users/{id}/activites', GetActivitesByUserAction::class)->setName('getActivitesByUser');
+        $group->get('/{id}', GetActiviteAction::class)->setName('getActivite');        
         
-    })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
+    })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class)  ;
+
+    $app->get('/users/{id}/activites', GetActivitesByUserAction::class)->setName('getActivitesByUser');
 
     
 

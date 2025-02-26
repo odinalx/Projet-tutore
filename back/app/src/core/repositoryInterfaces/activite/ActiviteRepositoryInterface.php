@@ -12,4 +12,6 @@ interface ActiviteRepositoryInterface {
     public function UpdateActivite(string $id, string $nom,  ?string $description, string $sections_id, string $lieu_id):ActiviteDTO;
 
     public function getActivite(string $id): ActiviteDTO;
+
+    public function getActivitesByUser(string $userId): array;
 }

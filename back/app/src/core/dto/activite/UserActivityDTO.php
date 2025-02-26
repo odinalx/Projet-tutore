@@ -1,82 +1,77 @@
 <?php
 namespace slv\core\dto\activite;
 
-class UserActivityDTO
+use slv\core\dto\DTO;
+
+class UserActivityDTO extends DTO
 {
-    private string $user_id;
-    private string $user_nom;
-    private string $user_prenom;
-    private string $activite_id;
-    private string $activite_nom;
-    private \DateTimeImmutable $date_debut;
-    private \DateTimeImmutable $date_fin;
-    private string $section_id;
-    private string $section_nom;
+    protected string $userId;
+    protected string $userNom;
+    protected string $userPrenom;
+    protected string $activiteId;
+    protected string $activiteNom;
+    protected string $dateDebut;
+    protected string $dateFin;
+    protected string $sectionId;
+    protected string $sectionNom;
 
     public function __construct(
-        string $user_id,
-        string $user_nom,
-        string $user_prenom,
-        string $activite_id,
-        string $activite_nom,
-        \DateTimeImmutable $date_debut,
-        \DateTimeImmutable $date_fin,
-        string $section_id,
-        string $section_nom
+        string $userId,
+        string $userNom,
+        string $userPrenom,
+        string $activiteId,
+        string $activiteNom,
+        string $dateDebut,
+        string $dateFin,
+        string $sectionId,
+        string $sectionNom
     ) {
-        $this->user_id = $user_id;
-        $this->user_nom = $user_nom;
-        $this->user_prenom = $user_prenom;
-        $this->activite_id = $activite_id;
-        $this->activite_nom = $activite_nom;
-        $this->date_debut = $date_debut;
-        $this->date_fin = $date_fin;
-        $this->section_id = $section_id;
-        $this->section_nom = $section_nom;
+        $this->userId = $userId;
+        $this->userNom = $userNom;
+        $this->userPrenom = $userPrenom;
+        $this->activiteId = $activiteId;
+        $this->activiteNom = $activiteNom;
+        $this->dateDebut = $dateDebut;
+        $this->dateFin = $dateFin;
+        $this->sectionId = $sectionId;
+        $this->sectionNom = $sectionNom;
     }
 
-    public function getUserId(): string
-    {
-        return $this->user_id;
+    
+
+    public function getUserId(): string {
+        return $this->userId;
     }
 
-    public function getUserNom(): string
-    {
-        return $this->user_nom;
+    public function getUserNom(): string {
+        return $this->userNom;
     }
 
-    public function getUserPrenom(): string
-    {
-        return $this->user_prenom;
+    public function getUserPrenom(): string {
+        return $this->userPrenom;
     }
 
-    public function getActiviteId(): string
-    {
-        return $this->activite_id;
+    public function getActiviteId(): string {
+        return $this->activiteId;
     }
 
-    public function getActiviteNom(): string
-    {
-        return $this->activite_nom;
+    public function getActiviteNom(): string {
+        return $this->activiteNom;
     }
 
-    public function getDateDebut(): \DateTimeImmutable
-    {
-        return $this->date_debut;
+    public function getDateDebut(): string {
+        return $this->dateDebut;
     }
 
-    public function getDateFin(): \DateTimeImmutable
-    {
-        return $this->date_fin;
+    public function getDateFin(): string {
+        return $this->dateFin;
     }
 
-    public function getSectionId(): string
-    {
-        return $this->section_id;
+    public function getSectionId(): string {
+        return $this->sectionId;
     }
 
-    public function getSectionNom(): string
-    {
-        return $this->section_nom;
+    public function getSectionNom(): string {
+        return $this->sectionNom;
     }
 }
