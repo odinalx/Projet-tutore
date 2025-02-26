@@ -2,9 +2,11 @@
 
 use Psr\Container\ContainerInterface;
 
+use slv\core\repositoryInterfaces\lieu\LieuRepositoryInterface;
 use slv\core\services\auth\ServiceAuthInterface;
 use slv\core\services\auth\ServiceAuth;
 use app\providers\JWTManager;
+use slv\core\services\lieu\ServiceLieuInterface;
 use slv\infrastructure\PDO\auth\PdoAuthRepository;
 use slv\core\repositoryInterfaces\auth\AuthRepositoryInterface;
 use slv\core\repositoryInterfaces\encadrants\EncadrantRepositoryInterface;
@@ -29,6 +31,8 @@ use slv\core\services\activite\ServiceActiviteInterface;
 use slv\core\services\activite\ServiceActivite;
 use slv\core\repositoryInterfaces\activite\ActiviteRepositoryInterface;
 use slv\infrastructure\PDO\activite\PdoActiviteRepository;
+use slv\core\services\lieu\ServiceLieu;
+use slv\infrastructure\PDO\lieu\PdoLieuRepository;
 
 
 return [
@@ -70,6 +74,10 @@ return [
         return new PdoActiviteRepository($container->get('slv.pdo'));
     },
 
+    LieuRepositoryInterface::class => function (ContainerInterface $container) {
+        return new PdoLieuRepository($container->get('slv.pdo'));
+    },
+
     //////////////////////////////////////////
     // Services
     //////////////////////////////////////////
@@ -97,6 +105,10 @@ return [
 
     ServiceActiviteInterface::class => function(ContainerInterface $container) {
         return new ServiceActivite($container->get(ActiviteRepositoryInterface::class));
+    },
+
+    ServiceLieuInterface::class => function (ContainerInterface $container) {
+        return new ServiceLieu($container->get(LieuRepositoryInterface::class));
     }
     
 ];

@@ -10,6 +10,7 @@ use slv\application\actions\auth\RegisterAction;
 use slv\application\actions\auth\LoginAction;
 use slv\application\actions\auth\RefreshAction;
 use slv\application\actions\auth\ValidateTokenAction;
+use slv\application\actions\lieu\GetLieuAction;
 use slv\application\actions\organisme\CreateOrganismeAction;
 use slv\application\actions\organisme\GetOrganismeAction;
 use slv\application\actions\organisme\DeleteOrganismeAction;
@@ -37,6 +38,7 @@ use slv\application\actions\activite\CreateActiviteAction;
 use slv\application\actions\activite\DeleteActiviteAction;
 use slv\application\actions\activite\UpdateActiviteAction;
 use slv\application\actions\activite\GetActiviteAction;
+
 
 
 return function(App $app): App {
@@ -98,7 +100,7 @@ return function(App $app): App {
         $group->delete('/{id}', DeleteLieuAction::class)->setName('deleteLieu');
         $group->patch('/{id}', UpdateLieuAction::class)->setName('updateLieu');
         $group->get('/{id}', GetLieuAction::class)->setName('getLieu');
-    });
+    })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
 
     //routes activite
     $app->group('/activite', function ($group) {
