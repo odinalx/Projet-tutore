@@ -25,9 +25,29 @@ class GetActivitesByUserAction extends AbstractAction
             $activites = $this->serviceActivite->getActivitesByUser($userId);
 
             
+            $formattedActivites = array_map(function($activiteDTO) {
+                return [
+                    'id'         => $activiteDTO->getActiviteId(),
+                    'nom'        => $activiteDTO->getActiviteNom(),
+                    'date_debut' => $activiteDTO->getDateDebut(),
+                    'date_fin'   => $activiteDTO->getDateFin(),
+                    
+                    'user' => [
+                        'id'     => $activiteDTO->getUserId(),
+                        'nom'    => $activiteDTO->getUserNom(),
+                        'prenom' => $activiteDTO->getUserPrenom()
+                    ],
+                    
+                    'section' => [
+                        'id'  => $activiteDTO->getSectionId(),
+                        'nom' => $activiteDTO->getSectionNom()
+                    ]
+                ];
+            }, $activites);
+    
             $responseData = [
                 'message' => 'Activités récupérées avec succès.',
-                'data' => $activites
+                'data' => $formattedActivites
             ];
 
             
