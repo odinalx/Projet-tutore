@@ -26,19 +26,38 @@ const section = ref({
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <!-- Card: Mon planning -->
-      <Card>
+      <Card class="col-span-3">
         <CardHeader>
           <h2 class="text-lg font-semibold">Mon planning</h2>
         </CardHeader>
         <CardContent>
-          <ul class="space-y-2">
-            <li v-for="(seance, index) in section.seances" :key="index" class="flex justify-between">
-              <span>{{ seance.jour }}:</span>
-              <span class="font-medium">{{ seance.heure }}</span>
-            </li>
-          </ul>
+          <table class="w-full border-collapse border border-gray-200 text-center">
+            <thead>
+              <tr class="bg-gray-100">
+                <th class="border border-gray-200 px-4 py-2">Lundi</th>
+                <th class="border border-gray-200 px-4 py-2">Mardi</th>
+                <th class="border border-gray-200 px-4 py-2">Mercredi</th>
+                <th class="border border-gray-200 px-4 py-2">Jeudi</th>
+                <th class="border border-gray-200 px-4 py-2">Vendredi</th>
+                <th class="border border-gray-200 px-4 py-2">Samedi</th>
+                <th class="border border-gray-200 px-4 py-2">Dimanche</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="border border-gray-200 px-4 py-2">{{ section.seances.find(s => s.jour === 'lundi')?.heure || '' }}</td>
+                <td class="border border-gray-200 px-4 py-2">{{ section.seances.find(s => s.jour === 'mardi')?.heure || '' }}</td>
+                <td class="border border-gray-200 px-4 py-2"></td>
+                <td class="border border-gray-200 px-4 py-2"></td>
+                <td class="border border-gray-200 px-4 py-2">{{ section.seances.find(s => s.jour === 'vendredi')?.heure || '' }}</td>
+                <td class="border border-gray-200 px-4 py-2"></td>
+                <td class="border border-gray-200 px-4 py-2"></td>
+              </tr>
+            </tbody>
+          </table>
         </CardContent>
       </Card>
+
 
       <!-- Card: Mes Informations -->
       <Card>

@@ -50,7 +50,8 @@ const user = ref({
         <CardContent>
           <ul class="space-y-2">
             <li v-for="section in user.sections" :key="section">
-              <a href="#" class="text-blue-500 hover:underline">{{ section }}</a>
+              <a href="/auth/section/" class="text-blue-500 hover:underline">{{ section }}</a>
+
             </li>
           </ul>
         </CardContent>

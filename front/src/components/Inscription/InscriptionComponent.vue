@@ -1,3 +1,29 @@
+<script setup>
+import { ref } from "vue";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+
+const weight = ref(null);
+const schedule = ref(null);
+const level = ref(null);
+const medicalCertificate = ref(null);
+
+const schedules = ["Matin", "Après-midi", "Soir"];
+const levels = ["Débutant", "Intermédiaire", "Avancé"];
+
+const handleFileUpload = (event) => {
+  medicalCertificate.value = event.target.files[0];
+};
+
+const submitForm = () => {
+  console.log({ weight: weight.value, schedule: schedule.value, level: level.value, medicalCertificate: medicalCertificate.value });
+};
+</script>
+
+
 <template>
     <div class="p-8 max-w-lg mx-auto">
       <Card>
@@ -45,29 +71,4 @@
       </Card>
     </div>
   </template>
-  
-  <script setup>
-  import { ref } from "vue";
-  import { Card, CardContent } from "@/components/ui/card";
-  import { Button } from "@/components/ui/button";
-  import { Input } from "@/components/ui/input";
-  import { Label } from "@/components/ui/label";
-  import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-  
-  const weight = ref(null);
-  const schedule = ref(null);
-  const level = ref(null);
-  const medicalCertificate = ref(null);
-  
-  const schedules = ["Matin", "Après-midi", "Soir"];
-  const levels = ["Débutant", "Intermédiaire", "Avancé"];
-  
-  const handleFileUpload = (event) => {
-    medicalCertificate.value = event.target.files[0];
-  };
-  
-  const submitForm = () => {
-    console.log({ weight: weight.value, schedule: schedule.value, level: level.value, medicalCertificate: medicalCertificate.value });
-  };
-  </script>
   
