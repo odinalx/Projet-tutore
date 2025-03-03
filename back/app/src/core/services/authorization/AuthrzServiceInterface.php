@@ -5,4 +5,5 @@ interface AuthrzServiceInterface{
     public function isGrantedResponsable(string $userId): bool;
     public function isGrantedSection(string $userid,string $sectionId): bool;
     public function isGrantedFormulaireSection(string $userId, string $formulaireId) : bool;
+    public function isGrantedPaiement(string $userId, string $paiementId) : bool;
 }

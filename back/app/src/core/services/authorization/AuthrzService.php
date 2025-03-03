@@ -8,6 +8,7 @@ use slv\core\repositoryInterfaces\auth\AuthRepositoryInterface;
 use slv\core\repositoryInterfaces\formulaire\FormulaireRepostitoryInterface;
 use slv\core\repositoryInterfaces\sections\SectionRepositoryInterface;
 use slv\core\repositoryInterfaces\formulaire\FormulaireRepositoryInterface;
+use slv\core\repositoryInterfaces\paiement\PaiementRepositoryInterface;
 
 class AuthrzService implements AuthrzServiceInterface
 {
@@ -15,12 +16,14 @@ class AuthrzService implements AuthrzServiceInterface
     private AuthRepositoryInterface $authRepository;
     private SectionRepositoryInterface $sectionRepository;
     private FormulaireRepositoryInterface $formulaireRepository;
+    private PaiementRepositoryInterface $paiementRepository;
 
-    public function __construct(AuthRepositoryInterface $authRepository, SectionRepositoryInterface $sectionRepository, FormulaireRepositoryInterface $formulaireRepository)
+    public function __construct(AuthRepositoryInterface $authRepository, SectionRepositoryInterface $sectionRepository, FormulaireRepositoryInterface $formulaireRepository, PaiementRepositoryInterface $paiementRepository)
     {
         $this->authRepository = $authRepository;
         $this->sectionRepository = $sectionRepository;
         $this->formulaireRepository = $formulaireRepository;
+        $this->paiementRepository = $paiementRepository;
     }
 
     public function isGrantedOrganisme(string $userId): bool
@@ -100,5 +103,21 @@ class AuthrzService implements AuthrzServiceInterface
         }
 
         throw new AuthrzInvalidRoleException("Vous n'avez pas les droits pour cette action.");
+    }
+
+    public function isGrantedPaiement(string $userId, string $paiementId): bool
+    {
+        $paiement = $this->paiementRepository->getPaiement($paiementId);
+
+        if (!$paiement) {
+            throw new AuthrzNotOwnerException("Paiement introuvable.");
+        }
+
+        // Vérifiez si l'utilisateur est celui associé au paiement
+        if ($paiement->user_id !== $userId) {
+            throw new AuthrzNotOwnerException("Vous n'êtes pas le propriétaire de ce paiement.");
+        }
+
+        return true;
     }
 }

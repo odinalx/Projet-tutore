@@ -12,6 +12,7 @@ use slv\core\repositoryInterfaces\auth\AuthRepositoryInterface;
 use slv\core\repositoryInterfaces\encadrants\EncadrantRepositoryInterface;
 use slv\core\repositoryInterfaces\formulaire\FormulaireRepositoryInterface;
 use slv\core\repositoryInterfaces\organisme\OrganismeRepostitoryInterface;
+use slv\core\repositoryInterfaces\paiement\PaiementRepositoryInterface;
 use slv\core\repositoryInterfaces\sections\SectionRepositoryInterface;
 use slv\core\services\organisme\ServiceOrganismeInterface;
 use slv\infrastructure\PDO\organisme\PdoOrganismeRepository;
@@ -33,7 +34,9 @@ use slv\core\repositoryInterfaces\activite\ActiviteRepositoryInterface;
 use slv\infrastructure\PDO\activite\PdoActiviteRepository;
 use slv\core\services\lieu\ServiceLieu;
 use slv\infrastructure\PDO\lieu\PdoLieuRepository;
-
+use slv\core\services\paiement\ServicePaiement;
+use slv\infrastructure\PDO\paiement\PdoPaiementRepository;
+use slv\core\services\paiement\ServicePaiementInterface;
 
 return [
     
@@ -47,7 +50,7 @@ return [
     },
 
     AuthrzServiceInterface::class => function (ContainerInterface $container) {
-        return new AuthrzService($container->get(AuthRepositoryInterface::class), $container->get(SectionRepositoryInterface::class), $container->get(FormulaireRepositoryInterface::class));
+        return new AuthrzService($container->get(AuthRepositoryInterface::class), $container->get(SectionRepositoryInterface::class), $container->get(FormulaireRepositoryInterface::class), $container->get(PaiementRepositoryInterface::class));
     },
 
     AuthRepositoryInterface::class => function (ContainerInterface $container) {
@@ -76,6 +79,10 @@ return [
 
     LieuRepositoryInterface::class => function (ContainerInterface $container) {
         return new PdoLieuRepository($container->get('slv.pdo'));
+    },
+
+    PaiementRepositoryInterface::class => function (ContainerInterface $container) {
+        return new PdoPaiementRepository($container->get('slv.pdo'), $container->get(AuthRepositoryInterface::class), $container->get(SectionRepositoryInterface::class));
     },
 
     //////////////////////////////////////////
@@ -109,6 +116,10 @@ return [
 
     ServiceLieuInterface::class => function (ContainerInterface $container) {
         return new ServiceLieu($container->get(LieuRepositoryInterface::class));
+    },
+
+    ServicePaiementInterface::class => function (ContainerInterface $container) {
+        return new ServicePaiement($container->get(PaiementRepositoryInterface::class));
     }
     
 ];

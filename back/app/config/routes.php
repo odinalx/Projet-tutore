@@ -39,7 +39,10 @@ use slv\application\actions\activite\DeleteActiviteAction;
 use slv\application\actions\activite\UpdateActiviteAction;
 use slv\application\actions\activite\GetActiviteAction;
 use slv\application\actions\activite\GetActivitesByUserAction;
-
+use slv\application\actions\paiement\CreatePaiementAction;
+use slv\application\actions\paiement\GetPaiementAction;
+use slv\application\actions\paiement\DeletePaiementAction;
+use slv\application\actions\paiement\CreatePaiementPartielAction;
 
 
 return function(App $app): App {
@@ -95,6 +98,7 @@ return function(App $app): App {
         $group->delete('/{id}', DeleteChampAction::class)->setName('deleteChamp');
     })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
 
+
     //routes lieu
     $app->group('/lieu', function ($group) {
         $group->post('', CreateLieuAction::class)->setName('createLieu');        
@@ -108,13 +112,19 @@ return function(App $app): App {
         $group->post('', CreateActiviteAction::class)->setName('createActivite');
         $group->delete('/{id}', DeleteActiviteAction::class)->setName('DeleteActivite');
         $group->patch('/{id}', UpdateActiviteAction::class)->setName('updateActivite');
-        $group->get('/{id}', GetActiviteAction::class)->setName('getActivite');        
-        
-    })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class)  ;
+        $group->get('/{id}', GetActiviteAction::class)->setName('getActivite');  
+    })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
 
     $app->get('/users/{id}/activites', GetActivitesByUserAction::class)->setName('getActivitesByUser');
+   
+    //Route paiements
+    $app->group('/paiements', function ($group) {
+        $group->post('', CreatePaiementAction::class)->setName('createPaiement');
+        $group->get('/{id}', GetPaiementAction::class)->setName('getPaiement');
+        $group->delete('/{id}', DeletePaiementAction::class)->setName('deletePaiement');
+        $group->post('/{id}/paiements-partiels', CreatePaiementPartielAction::class)->setName('createPaiementPartiel');
+    })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
 
-    
 
     $app->options('/{routes:.+}', function (Request $request, Response $response) {
         return $response;
