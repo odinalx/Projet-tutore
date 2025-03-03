@@ -1,9 +1,12 @@
 <?php
 
 use Psr\Container\ContainerInterface;
+
+use slv\core\repositoryInterfaces\lieu\LieuRepositoryInterface;
 use slv\core\services\auth\ServiceAuthInterface;
 use slv\core\services\auth\ServiceAuth;
 use app\providers\JWTManager;
+use slv\core\services\lieu\ServiceLieuInterface;
 use slv\infrastructure\PDO\auth\PdoAuthRepository;
 use slv\core\repositoryInterfaces\auth\AuthRepositoryInterface;
 use slv\core\repositoryInterfaces\encadrants\EncadrantRepositoryInterface;
@@ -25,6 +28,12 @@ use slv\core\services\sections\ServiceSection;
 use slv\infrastructure\PDO\encadrants\PdoEncadrantRepository;
 use slv\infrastructure\PDO\formulaire\PdoFormulaireRepository;
 use slv\core\services\formulaire\ServiceFormulaire;
+use slv\core\services\activite\ServiceActiviteInterface;
+use slv\core\services\activite\ServiceActivite;
+use slv\core\repositoryInterfaces\activite\ActiviteRepositoryInterface;
+use slv\infrastructure\PDO\activite\PdoActiviteRepository;
+use slv\core\services\lieu\ServiceLieu;
+use slv\infrastructure\PDO\lieu\PdoLieuRepository;
 use slv\core\services\paiement\ServicePaiement;
 use slv\infrastructure\PDO\paiement\PdoPaiementRepository;
 use slv\core\services\paiement\ServicePaiementInterface;
@@ -64,6 +73,14 @@ return [
         return new PdoFormulaireRepository($container->get('slv.pdo'));
     },
 
+    ActiviteRepositoryInterface::class => function (ContainerInterface $container) {
+        return new PdoActiviteRepository($container->get('slv.pdo'));
+    },
+
+    LieuRepositoryInterface::class => function (ContainerInterface $container) {
+        return new PdoLieuRepository($container->get('slv.pdo'));
+    },
+
     PaiementRepositoryInterface::class => function (ContainerInterface $container) {
         return new PdoPaiementRepository($container->get('slv.pdo'), $container->get(AuthRepositoryInterface::class), $container->get(SectionRepositoryInterface::class));
     },
@@ -91,6 +108,14 @@ return [
 
     ServiceFormulaireInterface::class => function (ContainerInterface $container) {
         return new ServiceFormulaire($container->get(FormulaireRepositoryInterface::class));
+    },
+
+    ServiceActiviteInterface::class => function(ContainerInterface $container) {
+        return new ServiceActivite($container->get(ActiviteRepositoryInterface::class));
+    },
+
+    ServiceLieuInterface::class => function (ContainerInterface $container) {
+        return new ServiceLieu($container->get(LieuRepositoryInterface::class));
     },
 
     ServicePaiementInterface::class => function (ContainerInterface $container) {

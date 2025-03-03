@@ -1,0 +1,16 @@
+meta {
+  name: GetActivitesByUser
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:9000/users/6a60ca56-6767-4dce-933c-e0884c173a65/activites
+  body: none
+  auth: none
+}
+
+headers {
+  ~Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6ImRlZmF1bHQta2V5LWlkIn0.eyJpZCI6IjZhNjBjYTU2LTY3NjctNGRjZS05MzNjLWUwODg0YzE3M2E2NSIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJleHAiOjE3NDA1ODAwMTh9.GyXo9oiCNUhGpdKXX0rGUUE5M3SVIH6BARP6tsSsp1uCCyZx66qpNb9XeN49_KHdXqh94VCfKWyQPQ9yv_LVLw
+}
+

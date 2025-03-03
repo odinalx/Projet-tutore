@@ -10,6 +10,7 @@ use slv\application\actions\auth\RegisterAction;
 use slv\application\actions\auth\LoginAction;
 use slv\application\actions\auth\RefreshAction;
 use slv\application\actions\auth\ValidateTokenAction;
+use slv\application\actions\lieu\GetLieuAction;
 use slv\application\actions\organisme\CreateOrganismeAction;
 use slv\application\actions\organisme\GetOrganismeAction;
 use slv\application\actions\organisme\DeleteOrganismeAction;
@@ -30,10 +31,19 @@ use slv\application\actions\formulaire\CreateChampAction;
 use slv\application\actions\formulaire\GetChampAction;
 use slv\application\actions\formulaire\DeleteChampAction;
 use slv\application\actions\formulaire\AddChampToFormulaireAction;
+use slv\application\actions\lieu\CreateLieuAction;
+use slv\application\actions\lieu\DeleteLieuAction;
+use slv\application\actions\lieu\UpdateLieuAction;
+use slv\application\actions\activite\CreateActiviteAction;
+use slv\application\actions\activite\DeleteActiviteAction;
+use slv\application\actions\activite\UpdateActiviteAction;
+use slv\application\actions\activite\GetActiviteAction;
+use slv\application\actions\activite\GetActivitesByUserAction;
 use slv\application\actions\paiement\CreatePaiementAction;
 use slv\application\actions\paiement\GetPaiementAction;
 use slv\application\actions\paiement\DeletePaiementAction;
 use slv\application\actions\paiement\CreatePaiementPartielAction;
+
 
 return function(App $app): App {
 
@@ -88,6 +98,25 @@ return function(App $app): App {
         $group->delete('/{id}', DeleteChampAction::class)->setName('deleteChamp');
     })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
 
+
+    //routes lieu
+    $app->group('/lieu', function ($group) {
+        $group->post('', CreateLieuAction::class)->setName('createLieu');        
+        $group->delete('/{id}', DeleteLieuAction::class)->setName('deleteLieu');
+        $group->patch('/{id}', UpdateLieuAction::class)->setName('updateLieu');
+        $group->get('/{id}', GetLieuAction::class)->setName('getLieu');
+    })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
+
+    //routes activite
+    $app->group('/activite', function ($group) {
+        $group->post('', CreateActiviteAction::class)->setName('createActivite');
+        $group->delete('/{id}', DeleteActiviteAction::class)->setName('DeleteActivite');
+        $group->patch('/{id}', UpdateActiviteAction::class)->setName('updateActivite');
+        $group->get('/{id}', GetActiviteAction::class)->setName('getActivite');  
+    })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
+
+    $app->get('/users/{id}/activites', GetActivitesByUserAction::class)->setName('getActivitesByUser');
+   
     //Route paiements
     $app->group('/paiements', function ($group) {
         $group->post('', CreatePaiementAction::class)->setName('createPaiement');
@@ -95,6 +124,7 @@ return function(App $app): App {
         $group->delete('/{id}', DeletePaiementAction::class)->setName('deletePaiement');
         $group->post('/{id}/paiements-partiels', CreatePaiementPartielAction::class)->setName('createPaiementPartiel');
     })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);
+
 
     $app->options('/{routes:.+}', function (Request $request, Response $response) {
         return $response;
