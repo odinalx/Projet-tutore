@@ -1,0 +1,21 @@
+meta {
+  name: UpdateLieu
+  type: http
+  seq: 2
+}
+
+patch {
+  url: http://localhost:9000/lieu/3ee100be-487b-41b6-924f-eb2a9f31bfbb
+  body: json
+  auth: none
+}
+
+headers {
+  ~Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6ImRlZmF1bHQta2V5LWlkIn0.eyJpZCI6IjEyMGNhNzk3LWNiZGQtNDYwZi1iNDMzLWYyOWYzMjg5NmVkNCIsImVtYWlsIjoidmljdG9yQHRlc3QuY29tIiwiZXhwIjoxNzM5MzgyMjEzfQ.KIdrzg0zzkQlBedPjRETjaWwS-t49HBJOK5FUYkaSEPHqqNPBM6j-ulQsf4NNLlIHUeekKxIHNWTH3qTBdhpiA
+}
+
+body:json {
+{
+    "nom":"new test" 
+}
+}

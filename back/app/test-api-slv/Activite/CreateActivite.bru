@@ -1,0 +1,26 @@
+meta {
+  name: CreateActivite
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:9000/activite
+  body: json
+  auth: none
+}
+
+headers {
+  ~Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6ImRlZmF1bHQta2V5LWlkIn0.eyJpZCI6IjZhNjBjYTU2LTY3NjctNGRjZS05MzNjLWUwODg0YzE3M2E2NSIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJleHAiOjE3NDA1ODAwMTh9.GyXo9oiCNUhGpdKXX0rGUUE5M3SVIH6BARP6tsSsp1uCCyZx66qpNb9XeN49_KHdXqh94VCfKWyQPQ9yv_LVLw
+}
+
+body:json {
+{
+    "nom":"postman",
+    "description":"postman",
+    "sections_id":"7432b3a7-3da6-46d3-b72b-1e0b86d1811a",
+    "lieu_id":"85327f5d-9c80-434f-a9c5-80b02c947b32",
+    "date_debut":"2025-03-12 12:00",
+    "date_fin": "2025-03-12 13:00"
+}
+}

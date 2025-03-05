@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  # Service Frontend
+  front.slv:
+    build: 
+      context: ./front
+      dockerfile: Dockerfile
+    container_name: front-slv
+    restart: always
+    volumes:
+      - ./front:/app
+      - /app/node_modules
+    ports:
+      - "8080:8080"
+    environment:
+      - VITE_API_URL=http://localhost:9090
+    depends_on:
+      - nginx-proxy
+    networks:
+      - slv-network
+
+  # Service Backend API
+  api.slv:
+    build: ./back/app/
+    container_name: api-slv
+    restart: always
+    volumes:
+      - ./back/app:/var/app
+    ports:
+      - "9000:80"
+    environment:
+      - APP_ENV=dev
+    depends_on:
+      - slv.db
+    networks:
+      - slv-network
+
+  # Service Base de données PostgreSQL
+  slv.db:
+    image: postgres:latest
+    container_name: db-slv
+    restart: always
+    ports:
+      - '9001:5432'
+    env_file:
+      - ./back/slv.env
+    volumes:
+      - ./back/data:/docker-entrypoint-initdb.d
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - slv-network
+
+  # Service Adminer pour gérer la base de données
+  adminer:
+    image: adminer
+    container_name: adminer-slv
+    ports:
+      - '9002:8080'
+    networks:
+      - slv-network
+
+  # Proxy NGINX pour gérer les CORS
+  nginx-proxy:
+    image: nginx:alpine
+    container_name: nginx-proxy-slv
+    ports:
+      - "9090:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - api.slv
+    networks:
+      - slv-network
+
+networks:
+  slv-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

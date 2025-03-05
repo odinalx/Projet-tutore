@@ -1,0 +1,18 @@
+meta {
+  name: UpdateOrganisme
+  type: http
+  seq: 3
+}
+
+patch {
+  url: http://localhost:9000/organismes/afa3b633-26d7-4c7c-8afc-cb761cc2b5ff
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nom":"Sport et Loisirs Vincéens",
+    "adresse":"123 rue Toul"
+  }
+}

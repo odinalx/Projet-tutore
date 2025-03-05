@@ -1,0 +1,26 @@
+meta {
+  name: CreateSection
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:9000/sections
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6ImRlZmF1bHQta2V5LWlkIn0.eyJpZCI6IjEyMGNhNzk3LWNiZGQtNDYwZi1iNDMzLWYyOWYzMjg5NmVkNCIsImVtYWlsIjoidmljdG9yQHRlc3QuY29tIiwiZXhwIjoxNzM5OTI5MzM2fQ.pk2dMsgxlrQMyl33HcOzw_SnEmls5nPafmN8Y_ihr98HknAt2fO1kAM8daXjKBVSPo6TPmSQEXQzdjp7bhDTHA
+}
+
+body:json {
+  {
+    "nom":"Rugby",
+    "description":"Le rugby de SLV",
+    "categorie":"Sport",
+    "capacite" : 15,
+    "tarif" : 10,
+    "organisme_id" : "a0c84a3b-a7dd-4d31-8f12-6a573ebe264d"
+  }
+}

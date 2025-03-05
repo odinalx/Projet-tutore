@@ -1,0 +1,22 @@
+meta {
+  name: UpdateFormulaire
+  type: http
+  seq: 4
+}
+
+patch {
+  url: http://localhost:9000/formulaires/fa8fe09b-01f3-4c3f-ad79-7da0d97b0bf5
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6ImRlZmF1bHQta2V5LWlkIn0.eyJpZCI6ImQ5NGE2OWRhLThhZGUtNGYzZS1hYzVmLTg2OTVkNWZhZjNjZCIsImVtYWlsIjoicmVzcG9uc2FibGVAdGVzdC5jb20iLCJleHAiOjE3NDA0ODA4MzZ9.lPkLr74e9xgLwiWImHv2oW66ZYKGp4sfGQozQpi0M0w1GBqxCzMqsE1OmXw4hrCpQ2nhMGftHoWYWoJ-yCRNwQ
+}
+
+body:json {
+  {
+    "nom":"Formulaire de chant",
+    "description":"C'est le formulaire de chant de SLV"
+  }
+}
