@@ -17,6 +17,7 @@ $app->add(new ErrorHandler());
 
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
+$app->addErrorMiddleware(true, false, false);
 
 $app = (require_once __DIR__ . '/routes.php')($app);
 $routeParser = $app->getRouteCollector()->getRouteParser();

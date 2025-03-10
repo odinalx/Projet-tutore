@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Service Frontend
   front.slv:
@@ -29,14 +27,11 @@ services:
       - ./back/app:/var/app
     ports:
       - "9000:80"
-    environment:
-      - APP_ENV=dev
     depends_on:
       - slv.db
     networks:
       - slv-network
 
-  # Service Base de données PostgreSQL
   slv.db:
     image: postgres:latest
     container_name: db-slv
@@ -47,11 +42,9 @@ services:
       - ./back/slv.env
     volumes:
       - ./back/data:/docker-entrypoint-initdb.d
-      - postgres_data:/var/lib/postgresql/data
     networks:
       - slv-network
 
-  # Service Adminer pour gérer la base de données
   adminer:
     image: adminer
     container_name: adminer-slv
@@ -76,6 +69,3 @@ services:
 networks:
   slv-network:
     driver: bridge
-
-volumes:
-  postgres_data:
