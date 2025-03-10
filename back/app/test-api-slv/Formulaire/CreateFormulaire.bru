@@ -1,0 +1,23 @@
+meta {
+  name: CreateFormulaire
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:9000/formulaires
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6ImRlZmF1bHQta2V5LWlkIn0.eyJpZCI6ImQ5NGE2OWRhLThhZGUtNGYzZS1hYzVmLTg2OTVkNWZhZjNjZCIsImVtYWlsIjoicmVzcG9uc2FibGVAdGVzdC5jb20iLCJleHAiOjE3NDA0ODA2NjV9.Egx_w7hH6P0Meg4JR4KI19nj_jzZ1vcxl3uJK_dPnh4YDFyp8NTEC6KwCxH20Gyzr9N0n6qs5NK8Vxsfdmw54g
+}
+
+body:json {
+  {
+    "nom":"Formulaire Chant",
+    "description":"Le formulaire pour s'inscrire au chant de SLV",
+    "section_id":"d1382afe-dac8-4723-bd75-7c3b08295698"
+  }
+}

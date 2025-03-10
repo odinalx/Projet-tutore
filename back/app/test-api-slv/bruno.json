@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "test-api-slv",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
