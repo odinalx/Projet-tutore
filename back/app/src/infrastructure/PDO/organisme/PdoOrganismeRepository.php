@@ -109,4 +109,25 @@ class PdoOrganismeRepository implements OrganismeRepostitoryInterface
             throw new PdoOrganismeException("Impossible de mettre à jour l'organisme : " . $e->getMessage());
         }
     }
+
+    public function getOrganismes(): array
+    {
+        try {
+            $stmt = $this->pdo->query('SELECT * FROM organismes');
+            $organismes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return array_map(function ($organisme) {
+                return new OrganismeDTO(
+                    $organisme['id'],
+                    $organisme['nom'],
+                    $organisme['description'],
+                    $organisme['adresse'],
+                    $organisme['created_at'],
+                    $organisme['updated_at']
+                );
+            }, $organismes);
+        } catch (PDOException $e) {
+            throw new PdoOrganismeException("Impossible de récupérer les organismes : " . $e->getMessage());
+        }
+    }
 }

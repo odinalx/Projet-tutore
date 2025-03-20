@@ -11,6 +11,7 @@ use slv\application\actions\auth\LoginAction;
 use slv\application\actions\auth\RefreshAction;
 use slv\application\actions\auth\ValidateTokenAction;
 use slv\application\actions\lieu\GetLieuAction;
+use slv\application\actions\organisme\GetOrganismesAction;
 use slv\application\actions\organisme\CreateOrganismeAction;
 use slv\application\actions\organisme\GetOrganismeAction;
 use slv\application\actions\organisme\DeleteOrganismeAction;
@@ -20,6 +21,7 @@ use slv\application\actions\sections\GetSectionAction;
 use slv\application\actions\sections\DeleteSectionAction;
 use slv\application\actions\sections\UpdateSectionAction;
 use slv\application\actions\sections\GetSectionsByUserAction;
+use slv\application\actions\sections\GetSectionsAction;
 use slv\application\actions\sections\AddUserToSectionAction;
 use slv\application\actions\encadrants\GetEncadrantsByUserAction;
 use slv\application\actions\encadrants\RemoveEncadrantFromSectionAction;
@@ -47,6 +49,8 @@ use slv\application\actions\paiement\CreatePaiementPartielAction;
 
 return function(App $app): App {
 
+    $app->add(new \app\middlewares\cors\Cors());
+
     // Public routes
     $app->get('/', HomeAction::class)->setName('home');
 
@@ -57,6 +61,7 @@ return function(App $app): App {
     $app->post('/tokens/validate', ValidateTokenAction::class)->setName('validateToken');
 
     // Routes pour les organismes
+    $app->get('/organismes', GetOrganismesAction::class)->setName('getOrganismes');
     $app->group('/organismes', function ($group) {
         $group->get('/{id}', GetOrganismeAction::class)->setName('getOrganisme');
         $group->post('', CreateOrganismeAction::class)->setName('createOrganisme');
@@ -65,15 +70,16 @@ return function(App $app): App {
     })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class); 
 
     // Routes pour les sections
+    $app->get('/sections', GetSectionsAction::class)->setName('getSections');
+    $app->get('/sections/{id}', GetSectionAction::class)->setName('getSection');
     $app->group('/sections', function ($group) {
-        $group->get('/{id}', GetSectionAction::class)->setName('getSection');
         $group->delete('/{id}', DeleteSectionAction::class)->setName('deleteSection');
         $group->patch('/{id}', UpdateSectionAction::class)->setName('updateSection');
         $group->post('', CreateSectionAction::class)->setName('createSection');
     })->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);    
     
     // Récupérer les sections d'un user
-    $app->get('/users/{id}/sections', GetSectionsByUserAction::class)->setName('getSectionsByUser');
+    $app->get('/users/{id}/sections', GetSectionsByUserAction::class)->setName('getSectionsByUser')->add(AuthMiddleware::class);
 
     // Associé un user à une section
     $app->post('/sections/{id}/users/{userId}', AddUserToSectionAction::class)->setName('addUserToSection');

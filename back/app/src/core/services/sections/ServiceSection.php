@@ -70,4 +70,13 @@ class ServiceSection implements ServiceSectionInterface
             throw new ServiceSectionException($e->getMessage());
         }
     }
+
+    public function getSections(): array
+    {
+        try {
+            return $this->sectionRepository->getSections();
+        } catch (PdoSectionException $e) {
+            throw new ServiceSectionException($e->getMessage());
+        }
+    }
 }

@@ -12,4 +12,5 @@ interface SectionRepositoryInterface {
     public function updateSection(string $id, ?string $nom, ?string $description, ?string $categorie, ?int $capacite, ?float $tarif, ?string $organisme_id ):SectionDTO;
     public function getSectionsByUser(string $user_id): array;
     public function addUserToSection(string $sectionid, string $userid, int $role): void;
+    public function getSections(): array;
 }

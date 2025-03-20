@@ -234,4 +234,32 @@ class PdoSectionRepository implements SectionRepositoryInterface
             throw new PdoSectionException("Erreur lors de l'ajout de l'utilisateur à la section : " . $e->getMessage());
         }
     }
+
+    public function getSections(): array
+    {
+        try {
+            $stmt = $this->pdo->prepare('SELECT * FROM sections');
+            $stmt->execute();
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $sections = [];
+            foreach ($rows as $row) {
+                $sections[] = new SectionDTO(
+                    $row['id'],
+                    $row['nom'],
+                    $row['description'],
+                    $row['categorie'],
+                    $row['capacite'],
+                    $row['tarif'],
+                    $row['organisme_id'],
+                    $row['created_at'],
+                    $row['updated_at']
+                );
+            }
+
+            return $sections;
+        } catch (PDOException $e) {
+            throw new PdoSectionException("Impossible de récupérer les sections : " . $e->getMessage());
+        }
+    }
 }

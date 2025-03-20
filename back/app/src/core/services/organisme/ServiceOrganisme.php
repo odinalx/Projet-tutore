@@ -52,4 +52,13 @@ class ServiceOrganisme implements ServiceOrganismeInterface
             throw new ServiceOrganismeException($e->getMessage());
         }
     }
+
+    public function getOrganismes(): array
+    {
+        try {
+            return $this->organismeRepository->getOrganismes();
+        } catch (PdoOrganismeException $e) {
+            throw new ServiceOrganismeException($e->getMessage());
+        }
+    }
 }
