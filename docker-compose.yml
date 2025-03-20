@@ -11,10 +11,6 @@ services:
       - /app/node_modules
     ports:
       - "8080:8080"
-    environment:
-      - VITE_API_URL=http://localhost:9090
-    depends_on:
-      - nginx-proxy
     networks:
       - slv-network
 
@@ -50,19 +46,6 @@ services:
     container_name: adminer-slv
     ports:
       - '9002:8080'
-    networks:
-      - slv-network
-
-  # Proxy NGINX pour gérer les CORS
-  nginx-proxy:
-    image: nginx:alpine
-    container_name: nginx-proxy-slv
-    ports:
-      - "9090:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - api.slv
     networks:
       - slv-network
 

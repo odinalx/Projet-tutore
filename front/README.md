@@ -1,72 +1,29 @@
-# Application Frontend
+# front
 
-Application Vue 3 avec TypeScript, Tailwind CSS et shadcn-vue.
+This template should help get you started developing with Vue 3 in Vite.
 
-## 🚀 Technologies
+## Recommended IDE Setup
 
-- [Vue 3](https://vuejs.org/) - Framework progressif
-- [TypeScript](https://www.typescriptlang.org/) - Typage statique
-- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS utilitaire
-- [shadcn-vue](https://www.shadcn-vue.com/) - Composants UI
-- [Vite](https://vitejs.dev/) - Build tool
-- [Vue Router](https://router.vuejs.org/) - Routage
-- [Pinia](https://pinia.vuejs.org/) - Gestion d'état
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
-## 📁 Structure du Projet
+## Customize configuration
 
-```bash
-src/
-├── assets/ # Ressources statiques
-├── components/
-│ └── ui/ # Composants UI shadcn
-├── lib/
-│ ├── api/ # Client API
-│ └── utils/ # Utilitaires
-├── router/ # Configuration du routeur
-├── stores/ # Stores Pinia
-├── types/ # Types TypeScript
-└── views/ # Pages de l'application
-```
+See [Vite Configuration Reference](https://vite.dev/config/).
 
-## 🛠️ Installation
+## Project Setup
 
-### Installation des dépendances
-
-```bash
+```sh
 npm install
 ```
 
-### Lancement du serveur de développement
+### Compile and Hot-Reload for Development
 
-```bash
+```sh
 npm run dev
 ```
 
-### Build pour la production
+### Compile and Minify for Production
 
-```bash
+```sh
 npm run build
 ```
-
-## 💻 Scripts Disponibles
-
-- `npm run dev` - Lance le serveur de développement
-- `npm run build` - Build pour la production
-- `npm run preview` - Prévisualise le build
-- `npm run lint` - Vérifie et corrige le code
-- `npm run format` - Formate le code avec Prettier
-
-## 🔧 Configuration VS Code Recommandée
-
-Extensions recommandées :
-
-- Vue Language Features (Volar)
-- ESLint
-- Prettier
-
-## 📝 Conventions de Code
-
-- ESLint pour le linting
-- Prettier pour le formatage
-- TypeScript strict mode
-- Composants Vue en composition API avec `<script setup>`
