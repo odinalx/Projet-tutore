@@ -8,9 +8,8 @@ services:
     restart: always
     volumes:
       - ./front:/app
-      - /app/node_modules
     ports:
-      - "8080:8080"
+      - "8080:80"
     networks:
       - slv-network
 
@@ -44,6 +43,7 @@ services:
   adminer:
     image: adminer
     container_name: adminer-slv
+    restart: always
     ports:
       - '9002:8080'
     networks:
