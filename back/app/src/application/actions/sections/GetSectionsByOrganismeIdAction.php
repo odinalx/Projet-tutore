@@ -1,43 +1,46 @@
 <?php
 
-namespace slv\application\actions\encadrants;
+namespace slv\application\actions\sections;
 
 use slv\application\actions\AbstractAction;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use slv\core\services\encadrants\ServiceEncadrantInterface;
-use slv\core\services\encadrants\ServiceEncadrantException;
+use slv\core\services\sections\ServiceSectionException;
+use slv\core\services\sections\ServiceSectionInterface;
 
-class GetEncadrantsByUserAction extends AbstractAction {
+class GetSectionsByOrganismeIdAction extends AbstractAction {
 
-    private ServiceEncadrantInterface $serviceEncadrant;
+    private ServiceSectionInterface $serviceSection;
 
-    public function __construct(ServiceEncadrantInterface $serviceEncadrant)
+    public function __construct(ServiceSectionInterface $serviceSection)
     {
-        $this->serviceEncadrant = $serviceEncadrant;
+        $this->serviceSection = $serviceSection;
     }
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         try {
-            $encadrants = $this->serviceEncadrant->getEncadrantsByUserId($args['id']);
+            $sections = $this->serviceSection->getSectionsByOrganismeId($args['id']);
             $responseData = [];
-            foreach ($encadrants as $encadrant) {
-                $responseData[] = [                    
-                    'id' => $encadrant->id,
-                    'nom' => $encadrant->nom,
-                    'prenom' => $encadrant->prenom,
-                    'email' => $encadrant->email,
-                    'role' => $encadrant->role,
-                    'section_id' => $encadrant->section_id,
+            foreach ($sections as $section) {
+                $responseData[] = [
+                    'id' => $section->id,
+                    'nom' => $section->nom,
+                    'description' => $section->description,
+                    'categorie' => $section->categorie,
+                    'capacite' => $section->capacite,
+                    'tarif' => $section->tarif,
+                    'organisme_id' => $section->organisme_id,
+                    'created_at' => $section->created_at,
+                    'updated_at' => $section->updated_at
                 ];
             }
             $responseData = [
-                'encadrants' => $responseData
+                'sections' => $responseData
             ];
             $rs->getBody()->write(json_encode($responseData));
             return $rs->withHeader('Content-Type', 'application/json')->withStatus(200);
-        } catch (ServiceEncadrantException $e) {
+        } catch (ServiceSectionException $e) {
             return $this->respondWithError($rs, $e->getMessage(), 400);
         } catch (\Exception $e) {
             return $this->respondWithError($rs, $e->getMessage(), 500);

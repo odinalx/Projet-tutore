@@ -50,12 +50,14 @@ class ServiceAuth implements ServiceAuthInterface
                 'id' => $userDTO->id,
                 'email' => $userDTO->email,
                 'exp' => time() + 3600, // Access token valable 1 heure
+                'role' => $userDTO->role,
             ]);
 
             $refreshToken = $this->jwtManager->createRefreshToken([
                 'id' => $userDTO->id,
                 'email' => $userDTO->email,
                 'exp' => time() + 86400, // Refresh token valable 24 heures
+                'role' => $userDTO->role,
             ]);
 
             $userDTO->setAccessToken($accessToken);
@@ -81,6 +83,7 @@ class ServiceAuth implements ServiceAuthInterface
                 'id' => $userDto->id,
                 'email' => $userDto->email,
                 'exp' => time() + 3600,
+                'role' => $userDto->role,
             ]);
 
             $userDto->setAccessToken($newAccessToken);

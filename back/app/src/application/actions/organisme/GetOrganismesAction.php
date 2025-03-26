@@ -1,43 +1,44 @@
 <?php
 
-namespace slv\application\actions\encadrants;
+namespace slv\application\actions\organisme;
 
 use slv\application\actions\AbstractAction;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use slv\core\services\encadrants\ServiceEncadrantInterface;
-use slv\core\services\encadrants\ServiceEncadrantException;
+use slv\core\services\organisme\ServiceOrganismeException;
+use slv\core\services\organisme\ServiceOrganismeInterface;
 
-class GetEncadrantsByUserAction extends AbstractAction {
+class GetOrganismesAction extends AbstractAction
+{
 
-    private ServiceEncadrantInterface $serviceEncadrant;
+    private ServiceOrganismeInterface $serviceOrganisme;
 
-    public function __construct(ServiceEncadrantInterface $serviceEncadrant)
+    public function __construct(ServiceOrganismeInterface $serviceOrganisme)
     {
-        $this->serviceEncadrant = $serviceEncadrant;
+        $this->serviceOrganisme = $serviceOrganisme;
     }
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         try {
-            $encadrants = $this->serviceEncadrant->getEncadrantsByUserId($args['id']);
+            $organismes = $this->serviceOrganisme->getOrganismes();
             $responseData = [];
-            foreach ($encadrants as $encadrant) {
-                $responseData[] = [                    
-                    'id' => $encadrant->id,
-                    'nom' => $encadrant->nom,
-                    'prenom' => $encadrant->prenom,
-                    'email' => $encadrant->email,
-                    'role' => $encadrant->role,
-                    'section_id' => $encadrant->section_id,
+            foreach ($organismes as $organisme) {
+                $responseData[] = [
+                    'id' => $organisme->id,
+                    'nom' => $organisme->nom,
+                    'description' => $organisme->description,
+                    'adresse' => $organisme->adresse,
+                    'created_at' => $organisme->created_at,
+                    'updated_at' => $organisme->updated_at
                 ];
             }
             $responseData = [
-                'encadrants' => $responseData
+                'data' => $responseData
             ];
             $rs->getBody()->write(json_encode($responseData));
             return $rs->withHeader('Content-Type', 'application/json')->withStatus(200);
-        } catch (ServiceEncadrantException $e) {
+        } catch (ServiceOrganismeException $e) {
             return $this->respondWithError($rs, $e->getMessage(), 400);
         } catch (\Exception $e) {
             return $this->respondWithError($rs, $e->getMessage(), 500);

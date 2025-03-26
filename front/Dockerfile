@@ -1,15 +1,13 @@
-FROM node:20-alpine
-
+# Étape de build
+FROM node:lts-alpine as build-stage
 WORKDIR /app
-
-# Copier tous les fichiers
-COPY . .
-
-# Installer les dépendances
+COPY package*.json ./
 RUN npm install
+COPY . .
+RUN npm run build
 
-# Exposer le port
-EXPOSE 8080
-
-# Commande de démarrage simplifiée
-CMD ["npm", "run", "dev"] 
+# Étape de production
+FROM nginx:stable-alpine as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
