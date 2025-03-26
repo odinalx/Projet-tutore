@@ -45,7 +45,7 @@ use slv\application\actions\paiement\CreatePaiementAction;
 use slv\application\actions\paiement\GetPaiementAction;
 use slv\application\actions\paiement\DeletePaiementAction;
 use slv\application\actions\paiement\CreatePaiementPartielAction;
-
+use slv\application\actions\sections\GetSectionsByOrganismeIdAction;
 
 return function(App $app): App {
 
@@ -62,8 +62,8 @@ return function(App $app): App {
 
     // Routes pour les organismes
     $app->get('/organismes', GetOrganismesAction::class)->setName('getOrganismes');
+    $app->get('/organismes/{id}', GetOrganismeAction::class)->setName('getOrganisme');
     $app->group('/organismes', function ($group) {
-        $group->get('/{id}', GetOrganismeAction::class)->setName('getOrganisme');
         $group->post('', CreateOrganismeAction::class)->setName('createOrganisme');
         $group->delete('/{id}', DeleteOrganismeAction::class)->setName('deleteOrganisme');
         $group->patch('/{id}', UpdateOrganismeAction::class)->setName('updateOrganisme');
@@ -72,6 +72,7 @@ return function(App $app): App {
     // Routes pour les sections
     $app->get('/sections', GetSectionsAction::class)->setName('getSections');
     $app->get('/sections/{id}', GetSectionAction::class)->setName('getSection');
+    $app->get('/organismes/{id}/sections', GetSectionsByOrganismeIdAction::class)->setName('getSectionsByOrganisme');
     $app->group('/sections', function ($group) {
         $group->delete('/{id}', DeleteSectionAction::class)->setName('deleteSection');
         $group->patch('/{id}', UpdateSectionAction::class)->setName('updateSection');

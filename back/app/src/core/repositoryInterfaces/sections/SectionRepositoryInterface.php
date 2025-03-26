@@ -13,4 +13,5 @@ interface SectionRepositoryInterface {
     public function getSectionsByUser(string $user_id): array;
     public function addUserToSection(string $sectionid, string $userid, int $role): void;
     public function getSections(): array;
+    public function getSectionsByOrganismeId(string $id): array;
 }

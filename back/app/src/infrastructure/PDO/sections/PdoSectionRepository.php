@@ -262,4 +262,36 @@ class PdoSectionRepository implements SectionRepositoryInterface
             throw new PdoSectionException("Impossible de récupérer les sections : " . $e->getMessage());
         }
     }
+
+    public function getSectionsByOrganismeId(string $id): array
+    {
+        try {
+            $stmt = $this->pdo->prepare('SELECT * FROM sections WHERE organisme_id = :organisme_id');
+            $stmt->execute(['organisme_id' => $id]);
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (!$rows) {
+                throw new PdoSectionException("Aucune section trouvée pour l'organisme avec l'ID $id.");
+            }
+
+            $sections = [];
+            foreach ($rows as $row) {
+                $sections[] = new SectionDTO(
+                    $row['id'],
+                    $row['nom'],
+                    $row['description'],
+                    $row['categorie'],
+                    $row['capacite'],
+                    $row['tarif'],
+                    $row['organisme_id'],
+                    $row['created_at'],
+                    $row['updated_at']
+                );
+            }
+
+            return $sections;
+        } catch (PDOException $e) {
+            throw new PdoSectionException("Erreur lors de la récupération des sections par organisme : " . $e->getMessage());
+        }
+    }
 }
