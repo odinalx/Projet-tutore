@@ -45,6 +45,7 @@ use slv\application\actions\paiement\CreatePaiementAction;
 use slv\application\actions\paiement\GetPaiementAction;
 use slv\application\actions\paiement\DeletePaiementAction;
 use slv\application\actions\paiement\CreatePaiementPartielAction;
+use slv\application\actions\sections\GetRoleByUserAndSectionAction;
 use slv\application\actions\sections\GetSectionsByOrganismeIdAction;
 
 return function(App $app): App {
@@ -83,7 +84,8 @@ return function(App $app): App {
     $app->get('/users/{id}/sections', GetSectionsByUserAction::class)->setName('getSectionsByUser')->add(AuthMiddleware::class);
 
     // Associé un user à une section
-    $app->post('/sections/{id}/users/{userId}', AddUserToSectionAction::class)->setName('addUserToSection');
+    $app->post('/sections/{id}/users/{userId}', AddUserToSectionAction::class)->setName('addUserToSection')->add(AuthMiddleware::class);
+    $app->get('/sections/{sectionId}/users/{userId}/role',GetRoleByUserAndSectionAction::class)->setName('getRoleByUserAndSection')->add(AuthMiddleware::class);
 
     // Routes encadrants
     $app->get('/users/{id}/encadrants', GetEncadrantsByUserAction::class)->setName('getEncadrantsBySection')->add(AuthMiddleware::class)->add(AuthrzMiddleware::class);

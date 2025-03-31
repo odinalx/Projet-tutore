@@ -88,4 +88,12 @@ class ServiceSection implements ServiceSectionInterface
             throw new ServiceSectionException($e->getMessage());
         }
     }
+
+    public function getRoleByUserAndSection(string $sectionId, string $userId): int {
+        try {
+            return $this->sectionRepository->getRoleByUserAndSection($sectionId, $userId);
+        } catch (PdoSectionException $e) {
+            throw new ServiceSectionException($e->getMessage());
+        }
+    }
 }

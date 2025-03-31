@@ -51,14 +51,15 @@ class AuthrzService implements AuthrzServiceInterface
     public function isGrantedSection(string $userId, string $sectionId): bool
     {
         $userDTO = $this->authRepository->getUserById($userId);
+        $userOtherRole = $this->sectionRepository->getRoleByUserAndSection($sectionId, $userId);
 
         // Si l'utilisateur est admin, il a tous les droits
-        if ($userDTO->role === User::ROLE_ADMIN) {
+        if ($userDTO->role === User::ROLE_ADMIN || $userOtherRole === User::ROLE_ADMIN) {
             return true;
         }
 
         // Si l'utilisateur est responsable, vérifier qu'il est bien affecté à cette section
-        if ($userDTO->role === User::ROLE_RESPONSABLE) {
+        if ($userDTO->role === User::ROLE_RESPONSABLE || $userOtherRole === User::ROLE_RESPONSABLE) {
             $sections = $this->sectionRepository->getSectionsByUser($userId);
 
             // Vérifier si la section donnée est bien dans la liste des sections du user

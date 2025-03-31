@@ -294,4 +294,21 @@ class PdoSectionRepository implements SectionRepositoryInterface
             throw new PdoSectionException("Erreur lors de la récupération des sections par organisme : " . $e->getMessage());
         }
     }
+
+    public function getRoleByUserAndSection(string $sectionId, string $userId): int {
+        try {
+            $stmt = $this->pdo->prepare('SELECT role FROM user_section WHERE user_id = :user_id AND section_id = :section_id');
+            $stmt->execute(['user_id' => $userId, 'section_id' => $sectionId]);
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            if (!$row) {
+                throw new PdoSectionException("Aucun rôle trouvé pour cet utilisateur dans cette section.");
+            }
+    
+            return (int) $row['role'];
+        } catch (PDOException $e) {
+            throw new PdoSectionException("Erreur lors de la récupération du rôle : " . $e->getMessage());
+        }
+    }
+    
 }

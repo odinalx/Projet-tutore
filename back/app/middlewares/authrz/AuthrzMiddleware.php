@@ -15,28 +15,32 @@ class AuthrzMiddleware
 {
     private AuthrzServiceInterface $authrzService;
 
+    // Injection du service de gestion des autorisations
     public function __construct(AuthrzServiceInterface $authrzService)
     {
         $this->authrzService = $authrzService;
     }
 
     public function __invoke(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
-    {
+    {   
+        // Récupération de l'en-tête 'Authorization' contenant le token JWT
         $authHeader = $request->getHeaderLine('Authorization');
 
+        // Vérification du format de l'en-tête Authorization
         if (!preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
             return $this->respondWithError("Token manquant ou mal formé", 400);
         }
 
         $token = $matches[1];
 
-        // Décode le token JWT
+        // Décodage du token JWT pour extraire les données associées (ici l'ID de l'utilisateur)
         $jwtManager = new JWTManager();
         $auth_data = $jwtManager->decodeToken($token);
-        $method = $request->getMethod();
-        $path = $request->getUri()->getPath();
-        $userId = $auth_data['id'];
+        $method = $request->getMethod();  // Récupération de la méthode HTTP (GET, POST, etc.)
+        $path = $request->getUri()->getPath();  // Récupération du chemin de la requête
+        $userId = $auth_data['id'];  // ID de l'utilisateur depuis le token JWT
 
+        // Vérification des droits d'accès en fonction de l'URL et de l'action
         if (strpos($path, '/organismes') === 0) {
             try {
                 $this->authrzService->isGrantedOrganisme($userId);
@@ -110,6 +114,7 @@ class AuthrzMiddleware
         return $handler->handle($request);
     }
 
+    // Méthode utilitaire pour renvoyer une réponse d'erreur
     private function respondWithError(string $message, int $status): ResponseInterface
     {
         $responseData = [

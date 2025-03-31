@@ -54,11 +54,8 @@ CREATE TABLE "public"."organismes" (
 ) WITH (oids = false);
 
 INSERT INTO "organismes" ("id", "nom", "description", "adresse", "created_at", "updated_at") VALUES
-('ac591c0a-19d2-43b9-828f-ae46828bef53',	'Sport et Loisirs Vincéens',	'Association qui gère une quinzaine de sections sportives et de loisirs',	'123 rue Eugène Mouilleron',	'2025-12-02 16:32:20',	'2025-12-02 16:32:20'),
-('17bbb71e-1378-455a-b6db-d69a45cade5d',	'Sport et Loisirs Vincéens',	'Association qui gère une quinzaine de sections sportives et de loisirs',	'123 rue Eugène Mouilleron',	'2025-12-02 16:33:22',	'2025-12-02 16:33:22'),
-('8d1ee702-6243-4ee4-a2a0-9612ea508fd2',	'Sport et Loisirs Vincéens',	'Association qui gère une quinzaine de sections sportives et de loisirs',	'123 rue Eugène Mouilleron',	'2025-12-02 16:35:14',	'2025-12-02 16:35:14'),
-('08c708ed-f36f-4570-9a58-331209f0621d',	'Sport et Loisirs Vincéens',	'Association qui gère une quinzaine de sections sportives et de loisirs',	'123 rue Eugène Mouilleron',	'2025-12-02 16:36:39',	'2025-12-02 16:36:39'),
-('a0c84a3b-a7dd-4d31-8f12-6a573ebe264d',	'Sport et Loisirs Vincéens',	'Association qui gère une quinzaine de sections sportives et de loisirs',	'123 rue Eugène Mouilleron',	'2025-12-02 16:43:44',	'2025-12-02 16:43:44');
+('a0c84a3b-a7dd-4d31-8f12-6a573ebe264d',	'Sport et Loisirs Vincéens',	'Association qui gère une quinzaine de sections sportives et de loisirs',	'123 rue Eugène Mouilleron',	'2025-12-02 16:43:44',	'2025-12-02 16:43:44'),
+('08c708ed-f36f-4570-9a58-331209f0621d',	'IUT Charlemagne',	'Association de l''IUT Charlemagne',	'123 rue Eugène Mouilleron',	'2025-12-02 16:36:39',	'2025-12-02 16:36:39');
 
 DROP TABLE IF EXISTS "paiement_partiel";
 CREATE TABLE "public"."paiement_partiel" (
@@ -106,11 +103,11 @@ CREATE TABLE "public"."sections" (
 
 INSERT INTO "sections" ("id", "nom", "description", "categorie", "capacite", "tarif", "organisme_id", "created_at", "updated_at") VALUES
 ('d1382afe-dac8-4723-bd75-7c3b08295698',	'Chant',	'Le chant de SLV',	'Musique',	15,	10,	'a0c84a3b-a7dd-4d31-8f12-6a573ebe264d',	'2025-02-18 23:26:21',	'2025-02-18 23:26:21'),
-('93a0775a-f598-4623-9386-4955c0791bd4',	'Peinture',	'La peinture de SLV',	'ART',	15,	10,	'a0c84a3b-a7dd-4d31-8f12-6a573ebe264d',	'2025-02-19 00:10:30',	'2025-02-19 00:10:30'),
 ('058a84a5-1cc8-428f-bf0f-00038241484f',	'Boxe',	'La boxe de SLV',	'Sport',	10,	10,	'08c708ed-f36f-4570-9a58-331209f0621d',	'2025-02-17 18:02:10',	'2025-02-19 00:13:15'),
 ('e0dd5de4-e21a-4de1-8cff-777c61d4912b',	'Foot',	'Le foot de SLV',	'Sport',	10,	10,	'08c708ed-f36f-4570-9a58-331209f0621d',	'2025-02-19 00:08:49',	'2025-02-19 00:16:14'),
-('4533cb2f-2227-4e45-b29a-b4b4d3040f02',	'Dessin',	'Le dessin de SLV',	'ART',	15,	10,	'a0c84a3b-a7dd-4d31-8f12-6a573ebe264d',	'2025-02-19 00:40:57',	'2025-02-19 00:40:57'),
-('9c4f9295-a3ab-4a66-875b-e4ec53805e02',	'Rugby',	'Le rugby de SLV',	'Sport',	15,	10,	'a0c84a3b-a7dd-4d31-8f12-6a573ebe264d',	'2025-02-19 00:42:42',	'2025-02-19 00:42:42');
+('9c4f9295-a3ab-4a66-875b-e4ec53805e02',	'Rugby',	'Le rugby de SLV',	'Sport',	15,	10,	'a0c84a3b-a7dd-4d31-8f12-6a573ebe264d',	'2025-02-19 00:42:42',	'2025-02-19 00:42:42'),
+('93a0775a-f598-4623-9386-4955c0791bd4',	'Peinture SLV',	'La peinture de SLV',	'ART',	15,	10,	'a0c84a3b-a7dd-4d31-8f12-6a573ebe264d',	'2025-02-19 00:10:30',	'2025-03-31 22:05:34'),
+('4533cb2f-2227-4e45-b29a-b4b4d3040f02',	'Dessin SLV',	'Le dessin de SLV',	'ART',	15,	10,	'a0c84a3b-a7dd-4d31-8f12-6a573ebe264d',	'2025-02-19 00:40:57',	'2025-03-31 22:14:00');
 
 DROP TABLE IF EXISTS "user_section";
 CREATE TABLE "public"."user_section" (
@@ -129,7 +126,9 @@ INSERT INTO "user_section" ("user_id", "section_id", "role", "created_at", "upda
 ('120ca797-cbdd-460f-b433-f29f32896ed4',	'9c4f9295-a3ab-4a66-875b-e4ec53805e02',	15,	'2025-02-19 00:42:42',	'2025-02-19 00:42:42'),
 ('d94a69da-8ade-4f3e-ac5f-8695d5faf3cd',	'e0dd5de4-e21a-4de1-8cff-777c61d4912b',	0,	'2025-02-19 15:59:08',	'2025-02-19 15:59:08'),
 ('3ea9853e-fbf3-4fdc-9293-a8c9cc394953',	'058a84a5-1cc8-428f-bf0f-00038241484f',	5,	'2025-02-19 16:33:35',	'2025-02-19 16:33:35'),
-('8a98f48f-c505-4bf3-b336-c70b20153ea0',	'd1382afe-dac8-4723-bd75-7c3b08295698',	5,	'2025-02-19 16:34:39',	'2025-02-19 16:34:39');
+('8a98f48f-c505-4bf3-b336-c70b20153ea0',	'd1382afe-dac8-4723-bd75-7c3b08295698',	5,	'2025-02-19 16:34:39',	'2025-02-19 16:34:39'),
+('3ea9853e-fbf3-4fdc-9293-a8c9cc394953',	'd1382afe-dac8-4723-bd75-7c3b08295698',	0,	'2025-03-31 20:44:59',	'2025-03-31 20:44:59'),
+('11363c2b-cd17-4620-bee8-5c86b0c0515c',	'93a0775a-f598-4623-9386-4955c0791bd4',	10,	'2025-03-31 21:01:56',	'2025-03-31 21:01:56');
 
 DROP TABLE IF EXISTS "users";
 CREATE TABLE "public"."users" (
@@ -167,4 +166,4 @@ ALTER TABLE ONLY "public"."sections" ADD CONSTRAINT "sections_organisme_id_fkey"
 ALTER TABLE ONLY "public"."user_section" ADD CONSTRAINT "user_section_section_id_fkey" FOREIGN KEY (section_id) REFERENCES sections(id) ON UPDATE CASCADE ON DELETE CASCADE NOT DEFERRABLE;
 ALTER TABLE ONLY "public"."user_section" ADD CONSTRAINT "user_section_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE NOT DEFERRABLE;
 
--- 2025-03-11 16:03:07.674263+00
+-- 2025-03-31 22:24:23.795525+00

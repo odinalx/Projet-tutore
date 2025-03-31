@@ -12,4 +12,5 @@ interface ServiceSectionInterface {
     public function addUserToSection(string $sectionid, string $userid, int $role): void;
     public function getSections(): array;
     public function getSectionsByOrganismeId(string $id): array;
+    public function getRoleByUserAndSection(string $sectionId, string $userId): int;
 }
