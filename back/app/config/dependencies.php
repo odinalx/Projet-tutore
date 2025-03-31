@@ -39,7 +39,10 @@ use slv\infrastructure\PDO\paiement\PdoPaiementRepository;
 use slv\core\services\paiement\ServicePaiementInterface;
 
 return [
-    
+
+    //////////////////////////////////////////
+    // Connexion PDO à la base de données
+    //////////////////////////////////////////
     'slv.pdo' => function (ContainerInterface $container) {
         $configPath = $container->get('slv.db.config'); // Récupère le chemin défini dans settings.php
         $config = parse_ini_file($configPath);
@@ -49,6 +52,9 @@ return [
         return new \PDO($dsn, $user, $password, [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
     },
 
+    //////////////////////////////////////////
+    // Interfaces pour les différents Repositories
+    //////////////////////////////////////////
     AuthrzServiceInterface::class => function (ContainerInterface $container) {
         return new AuthrzService($container->get(AuthRepositoryInterface::class), $container->get(SectionRepositoryInterface::class), $container->get(FormulaireRepositoryInterface::class), $container->get(PaiementRepositoryInterface::class));
     },
@@ -86,9 +92,8 @@ return [
     },
 
     //////////////////////////////////////////
-    // Services
+    // Interface pour les différents services
     //////////////////////////////////////////
-
     ServiceAuthInterface::class => function (ContainerInterface $container) {
         $jwtManager = $container->get(JWTManager::class);
         return new ServiceAuth($container->get(AuthRepositoryInterface::class), $jwtManager);
