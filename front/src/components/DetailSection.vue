@@ -1,24 +1,9 @@
 <script>
-import { organismeService } from '@/services/organismeService';
-import { useOrganismeStore } from '@/stores/organismeStore';
 export default {
   props: {
     section: {
       type: Object,
     },
-  },
-  data() {
-    return {
-      organismeName: ''
-    }
-  },
-  async mounted() {
-    const currentOrganisme = await organismeService.getOrganismeById(this.organismeStore.currentOrganisme.id);
-    this.organismeName = currentOrganisme.nom;
-  },
-  setup() {
-    const organismeStore = useOrganismeStore();
-    return { organismeStore };
   },
 
 };
@@ -49,7 +34,7 @@ export default {
         </div>
         <div v-if="section.organisme_id" class="flex items-center">
           <span class="font-semibold mr-2">Organisme:</span>
-          <span>{{ organismeName }}</span>
+          <span>{{ section.organisme_id }}</span>
         </div>
       </div>
     </div>

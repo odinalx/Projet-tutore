@@ -23,7 +23,7 @@ export default {
         categorie: null,
         capacite: null,
         tarif: null,
-        organisme_id: "",
+        organisme_id: null,
       },
     };
   },

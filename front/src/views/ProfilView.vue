@@ -2,7 +2,8 @@
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
 import UserSections from '@/components/UserSections.vue'
-import MyEncadrants from '@/components/MyEncadrants.vue';
+import MyEncadrants from '@/components/MyEncadrants.vue'
+import RegisterUser from '@/components/RegisterUser.vue'
 import utilsMixin from '@/mixins/utilsMixin';
 
 export default {
@@ -10,6 +11,7 @@ export default {
   components: {
     UserSections,
     MyEncadrants,
+    RegisterUser,
   },
   setup() {
     const router = useRouter()
@@ -20,7 +22,14 @@ export default {
     async handleLogout() {
       await this.authStore.logout()
       this.router.push('/')
-    }
+    },
+    isAdherent() {
+      if (this.authStore.isUserLoggedIn()) {
+          const roleAdherent = this.authStore.user.role;
+          return roleAdherent !== 0;    
+      }
+      return false;
+    },
   },
 }
 </script>
@@ -83,10 +92,7 @@ export default {
       <div class="md:col-span-2">
         <UserSections />
         <MyEncadrants :isVisible="checkUserRole()" />
-
-        <div class="bg-white rounded-lg shadow-md p-6">
-          <h2 class="text-xl font-semibold mb-4">Historique des paiements</h2>
-        </div>
+        <RegisterUser :isVisible="isAdherent()"/>
       </div>
     </div>
   </div>

@@ -111,5 +111,47 @@ export const sectionService = {
       throw new Error(error.error);
     }
     return response.status;
-  }
+  },
+
+  async addUserToSection(sectionId, userId, role) {
+    const response = await fetch(`${API_URL}/sections/${sectionId}/users/${userId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        role: role
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error);
+    }
+    return response.status;
+  },
+
+  async getRoleByUserAndSection(sectionId, userId) {
+    try {
+        const response = await fetch(`${API_URL}/sections/${sectionId}/users/${userId}/role`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error);
+        }
+
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
+}
+
+
 };
