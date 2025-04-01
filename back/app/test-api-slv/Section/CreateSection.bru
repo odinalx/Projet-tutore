@@ -1,0 +1,26 @@
+meta {
+  name: CreateSection
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:9000/sections
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6ImRlZmF1bHQta2V5LWlkIn0.eyJpZCI6ImQ5NGE2OWRhLThhZGUtNGYzZS1hYzVmLTg2OTVkNWZhZjNjZCIsImVtYWlsIjoicmVzcG9uc2FibGVAdGVzdC5jb20iLCJleHAiOjE3NDI1MDE4MDEsInJvbGUiOjEwfQ.a8kLAN3LMGR0ImaeeK2EoTn8OlgdKY6mRzQ3KayHcn1lSC9DMA_uiettV861J6oySVQGuLT7ix8YxoyGaY7yfA
+}
+
+body:json {
+  {
+    "nom":"Gunpla",
+    "description":"Tets",
+    "categorie":"Maquette",
+    "capacite" : 15,
+    "tarif" : 10,
+    "organisme_id" : "a0c84a3b-a7dd-4d31-8f12-6a573ebe264d"
+  }
+}

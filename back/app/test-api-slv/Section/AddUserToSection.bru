@@ -1,0 +1,17 @@
+meta {
+  name: AddUserToSection
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:9000/sections/058a84a5-1cc8-428f-bf0f-00038241484f/users/d94a69da-8ade-4f3e-ac5f-8695d5faf3cd
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "role" : 5
+  }
+}

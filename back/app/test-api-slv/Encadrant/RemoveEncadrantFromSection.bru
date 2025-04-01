@@ -1,0 +1,15 @@
+meta {
+  name: RemoveEncadrantFromSection
+  type: http
+  seq: 2
+}
+
+delete {
+  url: http://localhost:9000/sections/b0cdf4ec-3ee4-41eb-9ece-dfdf3a305392/encadrants/3ea9853e-fbf3-4fdc-9293-a8c9cc394953
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6ImRlZmF1bHQta2V5LWlkIn0.eyJpZCI6ImQ5NGE2OWRhLThhZGUtNGYzZS1hYzVmLTg2OTVkNWZhZjNjZCIsImVtYWlsIjoicmVzcG9uc2FibGVAdGVzdC5jb20iLCJleHAiOjE3NDI0OTcxNzYsInJvbGUiOjEwfQ.v0Cl6DR1GbxbeWhZIufsc0MMhD88WgQswUiTphA_TDKgbcMXjBNKi61ze3qF1Pc6iF54W72K2zxue6jiNOy0IQ
+}

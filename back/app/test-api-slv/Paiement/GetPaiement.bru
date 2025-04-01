@@ -1,0 +1,15 @@
+meta {
+  name: GetPaiement
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:9000/paiements/0e0ab11d-6def-4f63-93f4-42035d168155
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6ImRlZmF1bHQta2V5LWlkIn0.eyJpZCI6ImQ5NGE2OWRhLThhZGUtNGYzZS1hYzVmLTg2OTVkNWZhZjNjZCIsImVtYWlsIjoicmVzcG9uc2FibGVAdGVzdC5jb20iLCJleHAiOjE3NDA0OTY4ODF9.Q-9WfyOwh_O2DmHPqhhJhGptgiRsXpvuY6MTPjxwn3WD0dFirGKxCbMh4nwKh061jjgXLRPK1RbtFKAfFeEndg
+}

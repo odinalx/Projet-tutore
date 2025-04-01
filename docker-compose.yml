@@ -1,0 +1,54 @@
+services:
+  # Service Frontend
+  front.slv:
+    build: 
+      context: ./front
+      dockerfile: Dockerfile
+    container_name: front-slv
+    restart: always
+    volumes:
+      - ./front:/app
+    ports:
+      - "8080:80"
+    networks:
+      - slv-network
+
+  # Service Backend API
+  api.slv:
+    build: ./back/app/
+    container_name: api-slv
+    restart: always
+    volumes:
+      - ./back/app:/var/app
+    ports:
+      - "9000:80"
+    depends_on:
+      - slv.db
+    networks:
+      - slv-network
+
+  slv.db:
+    image: postgres:latest
+    container_name: db-slv
+    restart: always
+    ports:
+      - '9001:5432'
+    env_file:
+      - ./back/slv.env
+    volumes:
+      - ./back/data:/docker-entrypoint-initdb.d
+    networks:
+      - slv-network
+
+  adminer:
+    image: adminer
+    container_name: adminer-slv
+    restart: always
+    ports:
+      - '9002:8080'
+    networks:
+      - slv-network
+
+networks:
+  slv-network:
+    driver: bridge
